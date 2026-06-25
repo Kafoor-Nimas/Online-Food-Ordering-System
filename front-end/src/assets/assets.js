@@ -1,15 +1,27 @@
+import {
+  TruckIcon,
+  LeafIcon,
+  ClockIcon,
+  ShieldCheckIcon,
+  MapPinIcon,
+  PhoneIcon,
+  MailIcon,
+} from "lucide-react";
+
 import basket_icon from "./basket_icon.png";
 import logo from "./logo.png";
 import header_img from "./header_img.png";
 import search_icon from "./search_icon.png";
-import menu_1 from "./menu_1.png";
-import menu_2 from "./menu_2.png";
-import menu_3 from "./menu_3.png";
-import menu_4 from "./menu_4.png";
-import menu_5 from "./menu_5.png";
-import menu_6 from "./menu_6.png";
-import menu_7 from "./menu_7.png";
-import menu_8 from "./menu_8.png";
+import menu_1 from "./salad3.png";
+import menu_2 from "./rolls.png";
+import menu_3 from "./dessert.png";
+import menu_4 from "./sandwich.png";
+import menu_5 from "./cake.png";
+import menu_6 from "./veg2.png";
+import menu_7 from "./pasta3.png";
+import menu_8 from "./noodle.png";
+import menu_9 from "./biryani.png";
+import menu_10 from "./beverages2.png";
 import nav_cart_icon from "./nav_cart_icon.svg";
 
 import food_1 from "./food_1.png";
@@ -83,6 +95,32 @@ export const assets = {
   parcel_icon,
   nav_cart_icon,
 };
+
+export const heroSectionData = {
+  hero_features: [
+    { icon: TruckIcon, title: "Free Delivery", desc: "Orders over Rs.1000" },
+    { icon: ClockIcon, title: "30 Min Delivery", desc: "Fast to your door" },
+    { icon: ShieldCheckIcon, title: "Secure Pay", desc: "Safe checkout" },
+    { icon: PhoneIcon, title: "24/7 Support", desc: "Always here to help" },
+  ],
+};
+
+export const categoriesData = [
+  {
+    slug: "salad",
+    name: "Salad",
+    image: menu_1,
+  },
+  { slug: "rolls", name: "Rolls", image: menu_2 },
+  { slug: "deserts", name: "Deserts", image: menu_3 },
+  { slug: "sandwich", name: "Sandwich", image: menu_4 },
+  { slug: "cake", name: "Cake", image: menu_5 },
+  { slug: "veg", name: "Pure Veg", image: menu_6 },
+  { slug: "pasta", name: "Pasta", image: menu_7 },
+  { slug: "noodles", name: "Noodles", image: menu_8 },
+  { slug: "biryani", name: "Biryani", image: menu_9 },
+  { slug: "beverages", name: "Beverages", image: menu_10 },
+];
 
 export const menu_list = [
   {
