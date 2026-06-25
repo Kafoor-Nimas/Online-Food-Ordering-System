@@ -1,6 +1,7 @@
 import React from "react";
 import Hero from "../components/Hero";
 import Features from "../components/Features";
+import HomeCategories from "../components/HomeCategories";
 
 const Home = () => {
   return (
@@ -8,6 +9,7 @@ const Home = () => {
       <Hero />
       <div className="min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <Features />
+        <HomeCategories />
       </div>
     </div>
   );
