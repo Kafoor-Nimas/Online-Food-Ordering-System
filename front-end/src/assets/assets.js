@@ -1,3 +1,13 @@
+import {
+  TruckIcon,
+  LeafIcon,
+  ClockIcon,
+  ShieldCheckIcon,
+  MapPinIcon,
+  PhoneIcon,
+  MailIcon,
+} from "lucide-react";
+
 import basket_icon from "./basket_icon.png";
 import logo from "./logo.png";
 import header_img from "./header_img.png";
@@ -82,6 +92,15 @@ export const assets = {
   bag_icon,
   parcel_icon,
   nav_cart_icon,
+};
+
+export const heroSectionData = {
+  hero_features: [
+    { icon: TruckIcon, title: "Free Delivery", desc: "Orders over Rs.1000" },
+    { icon: ClockIcon, title: "30 Min Delivery", desc: "Fast to your door" },
+    { icon: ShieldCheckIcon, title: "Secure Pay", desc: "Safe checkout" },
+    { icon: PhoneIcon, title: "24/7 Support", desc: "Always here to help" },
+  ],
 };
 
 export const menu_list = [

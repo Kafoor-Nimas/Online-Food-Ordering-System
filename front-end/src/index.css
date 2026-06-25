@@ -8,6 +8,31 @@
 @theme {
   --color-primary: #f97316;
   --color-primary-dull: #ea6c0a;
+
+  /* --color-app-green: #1b3022;
+    --color-app-green-light: #2d4a35;
+    --color-app-green-lighter: #3d6b4a;
+    --color-app-orange: #f97316;
+    --color-app-orange-dark: #ea580c; */
+  --color-app-cream: #faf7f2;
+  /* --color-app-cream-dark: #f0ebe3;
+    --color-app-text: #1b3022;
+    --color-app-text-light: #6b7280;
+    --color-app-border: #e5e7eb;
+    --color-app-success: #22c55e;
+    --color-app-error: #ef4444;
+    --color-app-warning: #f59e0b;
+
+    --font-sans: "Outfit", sans-serif;
+    --font-serif: "DM Serif Display", serif; */
+}
+
+body {
+  /* font-family: var(--font-sans);
+    color: var(--color-app-text); */
+  background-color: var(--color-app-cream);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .no-scrollbar::-webkit-scrollbar {
