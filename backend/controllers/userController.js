@@ -149,6 +149,23 @@ export function isAdmin(req) {
 	}
 }
 
+ export function getUser(req,res){
+	
+	if(req.user == null){
+		res.status(401).json({
+			message: "Unauthorized"
+		})
+		return
+	}
+
+	res.json({
+		email: req.user.email,
+		name: req.user.name,
+		role: req.user.role,
+		avatar: req.user.avatar,	
+	})
+ }
+
 
 export async function getAllUsers(req, res){
 
