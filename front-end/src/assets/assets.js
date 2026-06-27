@@ -617,3 +617,35 @@ export const food_list = [
     originalPrice: 17,
   },
 ];
+
+export const footerLinks = [
+  {
+    title: "Quick Links",
+    links: [
+      { text: "Home", url: "/" },
+      { text: "Menu", url: "/menu" },
+      { text: "My Orders", url: "/my-orders" },
+      { text: "Cart", url: "/cart" },
+      { text: "Contact Us", url: "#contact" },
+    ],
+  },
+  {
+    title: "Food Categories",
+    links: [
+      { text: "Salads", url: "/menu?category=salad" },
+      { text: "Rolls", url: "/menu?category=rolls" },
+      { text: "Desserts", url: "/menu?category=deserts" },
+      { text: "Pasta", url: "/menu?category=pasta" },
+      { text: "Noodles", url: "/menu?category=noodles" },
+    ],
+  },
+  {
+    title: "Follow Us",
+    links: [
+      { text: "Instagram", url: "#" },
+      { text: "Twitter", url: "#" },
+      { text: "Facebook", url: "#" },
+      { text: "YouTube", url: "#" },
+    ],
+  },
+];
