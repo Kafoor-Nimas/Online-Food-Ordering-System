@@ -9,22 +9,27 @@
   --color-primary: #f97316;
   --color-primary-dull: #ea6c0a;
 
-  /* --color-app-green: #1b3022;
-    --color-app-green-light: #2d4a35;
-    --color-app-green-lighter: #3d6b4a;
-    --color-app-orange: #f97316;
-    --color-app-orange-dark: #ea580c; */
+  --color-app-green: #1b3022;
+  --color-app-green-light: #2d4a35;
+  --color-app-green-lighter: #3d6b4a;
+  --color-app-orange: #f97316;
+  --color-app-orange-dark: #ea580c;
   --color-app-cream: #faf7f2;
-  /* --color-app-cream-dark: #f0ebe3;
-    --color-app-text: #1b3022;
-    --color-app-text-light: #6b7280;
-    --color-app-border: #e5e7eb;
-    --color-app-success: #22c55e;
-    --color-app-error: #ef4444;
-    --color-app-warning: #f59e0b;
+  --color-app-cream-dark: #f0ebe3;
+  --color-app-text: #1b3022;
+  --color-app-text-light: #6b7280;
+  --color-app-border: #e5e7eb;
+  --color-app-success: #22c55e;
+  --color-app-error: #ef4444;
+  --color-app-warning: #f59e0b;
+  --color-app-orange-dark: #ea580c;
+  --color-app-orange: #f97316;
+  --color-app-text: #374151;
+  --color-app-text-light: #9ca3af;
+  --color-app-warning: #f59e0b;
 
-    --font-sans: "Outfit", sans-serif;
-    --font-serif: "DM Serif Display", serif; */
+  --font-sans: "Outfit", sans-serif;
+  --font-serif: "DM Serif Display", serif;
 }
 
 body {
@@ -37,4 +42,8 @@ body {
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+.flex-center {
+  @apply flex items-center justify-center;
 }

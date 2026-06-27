@@ -6,7 +6,7 @@ const Hero = () => {
   return (
     <div
       style={{ backgroundImage: `url(${assets.header_img})` }}
-      className="h-[34vw] my-8 mx-6 md:mx-16 lg:mx-24 xl:mx-32 rounded-2xl bg-no-repeat bg-cover bg-center relative"
+      className="h-[34vw] my-8 mt-30 mx-6 md:mx-16 lg:mx-24 xl:mx-38  rounded-2xl bg-no-repeat bg-cover bg-center relative max-w-[1200px]"
     >
       <div className="absolute bottom-[10%] left-[6vw] flex flex-col items-start gap-[1.5vw] max-w-[50%]">
         <h2 className="font-bold text-white text-[max(4.5vw,22px)] leading-tight">
