@@ -8,13 +8,12 @@ import NewsLetter from "../components/NewsLetter";
 const Home = () => {
   return (
     <div>
-      <Hero />
+        <Hero />
       <div className="min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <Features />
         <HomeCategories />
         <PopularProducts />
-        <NewsLetter/>
-        
+        <NewsLetter />
       </div>
     </div>
   );
