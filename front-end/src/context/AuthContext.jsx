@@ -57,17 +57,19 @@ export function AuthProvider({ children }) {
   };
 
   const logout = () => {
+    toast.success("Logout successfull");
     setUser(null);
     setToken(null);
     localStorage.removeItem("auth_token");
     localStorage.removeItem("auth_user");
-    navigate("/login");
+    navigate("/");
   };
 
   return (
     <AuthContext.Provider
       value={{
         user,
+        setUser,
         token,
         loading,
         login,
