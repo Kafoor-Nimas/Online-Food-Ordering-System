@@ -1,5 +1,5 @@
 import express from "express"
-import { blockOrUnblockUser, changeRole, changeUserPassword, createUser, getAllUsers, getUser, loginUser, updateUserProfile } from "../controllers/userController"
+import { blockOrUnblockUser, changeRole, changeUserPassword, createUser, getAllUsers, getUser, loginUser, updateUserProfile } from "../controllers/userController.js"
 
 const userRouter = express.Router()
 

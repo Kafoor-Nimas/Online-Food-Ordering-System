@@ -56,12 +56,11 @@ export function loginUser(req, res) {
 							avatar: user.avatar,
 							isEmailVerified: user.isEmailVerified,
 						},
-						process.env.JWT_SECRET
+						process.env.JWT_SECRET,
+                        {
+                            expiresIn: req.body.rememberme ? "30d" : "48h"
+                    }
 					);
-
-					console.log(token)
-		
-
 
 
 					res.json({
