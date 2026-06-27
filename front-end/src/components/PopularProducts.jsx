@@ -21,7 +21,7 @@ const PopularProducts = () => {
     // Using dummy data until backend products are seeded
     const formatted = food_list.slice(0, 10).map((p) => ({
       ...p,
-      unit: "piece",
+
       rating: 4.5,
     }));
     setProducts(formatted);
