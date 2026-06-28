@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
   {
+    productId: { type: String, unique: true, sparse: true },
     name: { type: String, required: true },
     description: { type: String, default: "" },
     price: { type: Number, required: true },
@@ -15,7 +16,7 @@ const productSchema = new mongoose.Schema(
     reviewCount: { type: Number, default: 0 },
     isAvailable: { type: Boolean, default: true },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const ProductModel =
