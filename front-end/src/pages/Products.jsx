@@ -1,49 +1,42 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { ChevronDown, Home, SlidersHorizontal, XIcon } from "lucide-react";
-import Loading from "../components/Loading";
 import FilterPanel from "../components/FilterPanel";
-import toast from "react-hot-toast";
 import ProductCard from "../components/ProductCard";
-import { categories_Data } from "../assets/assets";
-import api from "../config/api";
+import { categories_Data, food_list } from "../assets/assets";
 
 const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState([]);
-  const [totalPages, setTotalPages] = useState(1);
-  const [loading, setLoading] = useState(true);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   const category = searchParams.get("category") || "";
-  const organic = searchParams.get("organic") || "";
   const sort = searchParams.get("sort") || "";
-  const page = Number(searchParams.get("page")) || 1;
   const minPrice = searchParams.get("minPrice") || "";
   const maxPrice = searchParams.get("maxPrice") || "";
+  const organic = searchParams.get("organic") || "";
 
-  const fetchProducts = async () => {
-    setLoading(true);
+  const totalPages = 1;
+  const page = 1;
 
-    try {
-      const params = new URLSearchParams();
-      if (category) params.set("category", category);
-      if (organic) params.set("organic", organic);
-      if (sort) params.set("sort", sort);
-      if (minPrice) params.set("minPrice", minPrice);
-      if (maxPrice) params.set("maxPrice", maxPrice);
-      params.set("page", String(page));
-      params.set("limit", "12");
+  useEffect(() => {
+    let filtered = [...food_list];
 
-      const { data } = await api.get(`/products?${params.toString()}`);
-      setProducts(data.products);
-      setTotalPages(data.pages);
-    } catch (error) {
-      toast.error(error?.response?.data?.message || error?.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+    if (category)
+      filtered = filtered.filter(
+        (p) => p.category.toLowerCase() === category.toLowerCase(),
+      );
+    if (minPrice)
+      filtered = filtered.filter((p) => p.price >= Number(minPrice));
+    if (maxPrice)
+      filtered = filtered.filter((p) => p.price <= Number(maxPrice));
+    if (sort === "price_asc") filtered.sort((a, b) => a.price - b.price);
+    if (sort === "price_desc") filtered.sort((a, b) => b.price - a.price);
+    if (sort === "rating") filtered.sort((a, b) => b.rating - a.rating);
+    if (sort === "name") filtered.sort((a, b) => a.name.localeCompare(b.name));
+
+    setProducts(filtered);
+  }, [category, sort, minPrice, maxPrice]);
 
   const updateFilter = (key, value) => {
     const newParams = new URLSearchParams(searchParams);
@@ -52,21 +45,12 @@ const Products = () => {
     } else {
       newParams.delete(key);
     }
-    if (key !== "page") {
-      newParams.delete("page");
-    }
     setSearchParams(newParams);
   };
 
   const clearFilters = () => setSearchParams({});
-
   const activeCategory = categories_Data.find((c) => c.slug === category);
-
-  const hasFilters = category || organic || minPrice || maxPrice;
-
-  useEffect(() => {
-    fetchProducts();
-  }, [category, organic, sort, page, minPrice, maxPrice]);
+  const hasFilters = category || minPrice || maxPrice;
 
   return (
     <div className="min-h-screen bg-app-cream mt-20">
@@ -138,11 +122,12 @@ const Products = () => {
                 </div>
               </div>
             </div>
-
             {/* Product Grid */}
-            {loading ? (
+            {/* {loading ? (
               <Loading />
-            ) : products.length === 0 ? (
+            ) :  */}
+            {/* Product Grid */}
+            {products.length === 0 ? (
               <div className="text-center py-16">
                 <p className="text-lg font-semibold text-app-green mb-2">
                   No products found
@@ -154,20 +139,17 @@ const Products = () => {
                   onClick={clearFilters}
                   className="px-5 py-2 text-sm font-medium bg-app-green text-white rounded-xl hover:bg-app-green-light transition-colors"
                 >
-                  ClearFilters
+                  Clear Filters
                 </button>
               </div>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 xl:gap-8">
-                {products.map(
-                  (product) =>
-                    product.inStock === true && (
-                      <ProductCard key={product._id} product={product} />
-                    ),
-                )}
+                {products.map((product) => (
+                  <ProductCard key={product._id} product={product} />
+                ))}
               </div>
             )}
-
+            {/* } */}
             {/* Pagination */}
             {totalPages > 1 && (
               <div className="flex-center gap-2 mt-16">
