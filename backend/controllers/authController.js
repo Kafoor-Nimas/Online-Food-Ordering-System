@@ -29,6 +29,7 @@ export const register = async (req, res) => {
 
     res.status(201).json({
       token,
+      success: true,
       user: {
         id: user._id,
         name: user.name,
@@ -38,6 +39,7 @@ export const register = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
+    toast.error(error.response?.data?.message || error.message);
   }
 };
 
@@ -62,6 +64,7 @@ export const login = async (req, res) => {
 
     res.json({
       token,
+      success: true,
       user: {
         id: user._id,
         name: user.name,
@@ -71,6 +74,7 @@ export const login = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
+    toast.error(error.response?.data?.message || error.message);
   }
 };
 

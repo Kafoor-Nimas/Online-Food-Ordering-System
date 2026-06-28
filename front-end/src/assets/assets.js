@@ -649,3 +649,19 @@ export const footerLinks = [
     ],
   },
 ];
+
+export const categories_Data = [
+  {
+    slug: "fruits-vegetables",
+    name: "Fruits & Vegetables",
+  },
+  { slug: "personal-care", name: "Personal Care" },
+  { slug: "pantry-staples", name: "Pantry Staples" },
+  { slug: "bakery", name: "Bakery" },
+  { slug: "beverages", name: "Beverages" },
+  { slug: "meat-seafood", name: "Meat & Seafood" },
+  { slug: "snacks", name: "Snacks" },
+  { slug: "frozen-foods", name: "Frozen Foods" },
+  { slug: "baby-care", name: "Baby Care" },
+  { slug: "dairy-eggs", name: "Dairy & Eggs" },
+];

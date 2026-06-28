@@ -9,12 +9,10 @@ export async function createProduct(req, res) {
   try {
     const data = {};
     data.productId = req.body.productId;
-
     if (!req.body.name)
       return res.status(400).json({ message: "Product name is required" });
     data.name = req.body.name;
     data.description = req.body.description || "";
-
     if (!req.body.price)
       return res.status(400).json({ message: "Product price is required" });
     data.price = req.body.price;
@@ -33,7 +31,6 @@ export async function createProduct(req, res) {
   }
 }
 
-//for admin panel (shows all products including unavailable)
 export async function getProducts(req, res) {
   if (!isAdmin(req)) {
     res.status(403).json({ message: "Access denied. Admins only" });
@@ -47,15 +44,15 @@ export async function getProducts(req, res) {
   }
 }
 
-// for menu page (with filters, sorting, pagination)
 export const getProductsForMenu = async (req, res) => {
   try {
-    const { category, search, sort, limit, page, minPrice, maxPrice } =
+    const { category, search, sort, limit, page, minPrice, maxPrice, organic } =
       req.query;
     const filter = { isAvailable: true };
 
     if (category && category !== "all") filter.category = category;
     if (search) filter.name = { $regex: search, $options: "i" };
+    if (organic === "true") filter.organic = true;
     if (minPrice || maxPrice) {
       filter.price = {};
       if (minPrice) filter.price.$gte = Number(minPrice);
@@ -121,7 +118,6 @@ export async function updateProduct(req, res) {
     data.image = req.body.image || "/images/default-product.png";
     data.isAvailable = req.body.isAvailable === false ? false : true;
     data.stock = req.body.stock || 0;
-
     await ProductModel.updateOne({ productId: req.params.productId }, data);
     res.status(200).json({ message: "Product updated successfully" });
   } catch (error) {
