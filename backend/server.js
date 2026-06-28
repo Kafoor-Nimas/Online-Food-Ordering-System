@@ -3,13 +3,10 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 
-
 import authRouter from "./routes/authRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 
-
 import userRouter from "./router/userRouter.js";
-import productRouter from "./router/productRouter.js";
 
 dotenv.config();
 connectDB();
@@ -22,13 +19,9 @@ const port = process.env.PORT || 5000;
 
 app.get("/", (req, res) => res.send("Server is Live!"));
 
-
-app.use("/api/auth", authRouter);           
-app.use("/api/products", productRoutes);    
-
-
-app.use("/api/users", userRouter);          // user management
-app.use("/api/admin/products", productRouter); // admin product CRUD
+app.use("/api/auth", authRouter); // login, register
+app.use("/api/products", productRoutes); // all product routes
+app.use("/api/users", userRouter); // admin user management
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
