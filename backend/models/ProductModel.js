@@ -9,6 +9,7 @@ const productSchema = new mongoose.Schema(
     image: { type: String, required: true },
     category: { type: String, required: true },
     stock: { type: Number, default: 0 },
+    inStock: { type: Boolean, default: true },
     unit: { type: String, default: "piece" },
     rating: { type: Number, default: 0 },
     reviewCount: { type: Number, default: 0 },
@@ -16,7 +17,8 @@ const productSchema = new mongoose.Schema(
   },
   { timestamps: true },
 );
+
 const ProductModel =
-  mongoose.models.user || mongoose.model("product", userSchema);
+  mongoose.models.product || mongoose.model("product", productSchema);
 
 export default ProductModel;

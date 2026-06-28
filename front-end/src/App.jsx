@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import Login from "./components/Login";
 import { AuthProvider } from "./context/AuthContext";
 import { useAuth } from "./context/AuthContext";
+import AllProducts from "./pages/Products";
 
 function AppContent() {
   const { showUserLogin } = useAuth();
@@ -18,6 +19,7 @@ function AppContent() {
       {showUserLogin && <Login />}
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/menu" element={<AllProducts />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
