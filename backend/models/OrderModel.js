@@ -2,14 +2,15 @@ import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema(
   {
+    orderId: {type: String, required: true, unique: true},
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "user",
       required: true,
     },
     items: [
       {
-        product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+        productId: { type: mongoose.Schema.Types.ObjectId, ref: "productId" },
         name: String,
         price: Number,
         quantity: Number,
@@ -18,8 +19,6 @@ const orderSchema = new mongoose.Schema(
     ],
     shippingAddress: { type: String, required: true },
     paymentMethod: { type: String, default: "cash" },
-    subtotal: { type: Number, required: true },
-    deliveryFee: { type: Number, default: 0 },
     total: { type: Number, required: true },
     status: {
       type: String,
@@ -33,10 +32,12 @@ const orderSchema = new mongoose.Schema(
       ],
       default: "Placed",
     },
+    email: {type: String, required: true},
+    phone: {type: String, required: true},
   },
   { timestamps: true },
 );
 
-const OrderModel = mongoose.models.user || mongoose.model("order", userSchema);
+const OrderModel = mongoose.models.order || mongoose.model("order", orderSchema);
 
 export default OrderModel;

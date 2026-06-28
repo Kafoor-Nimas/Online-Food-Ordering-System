@@ -137,6 +137,7 @@ export function isAdmin(req) {
   }
 
   if (req.user.role == "admin") {
+      console.log(req.user.role);
     return true;
   } else {
     return false;
