@@ -19,14 +19,17 @@ const Navbar = () => {
 
   useEffect(() => {
     if (searchQuery.length > 0) {
-      navigate("/products");
+      navigate("/menu");
     }
   }, [searchQuery]);
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-white shadow-md px-6 md:px-16 lg:px-24 xl:px-32 py-4 flex items-center justify-between">
       <NavLink
         to="/"
-        onClick={() => setOpen(false)}
+        onClick={() => {
+          setOpen(false);
+          window.scrollTo(0, 0);
+        }}
         className="text-2xl font-bold text-orange-500"
       >
         🍕 FoodOrder
@@ -34,9 +37,15 @@ const Navbar = () => {
 
       {/* Desktop Menu */}
       <div className="hidden sm:flex items-center gap-8">
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/menu">Menu</NavLink>
-        <NavLink to="/">Contact</NavLink>
+        <NavLink to="/" onClick={() => window.scrollTo(0, 0)}>
+          Home
+        </NavLink>
+        <NavLink to="/menu" onClick={() => window.scrollTo(0, 0)}>
+          Menu
+        </NavLink>
+        <NavLink to="/" onClick={() => window.scrollTo(0, 0)}>
+          Contact
+        </NavLink>
 
         <div className="hidden lg:flex items-center text-sm gap-2 border border-gray-300 px-3 rounded-full">
           <input

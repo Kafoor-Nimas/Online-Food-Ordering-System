@@ -6,7 +6,11 @@ const Footer = () => {
     <div className="px-6 md:px-16 lg:px-24 xl:px-32 mt-24 bg-primary/10">
       <div className="flex flex-col md:flex-row items-start justify-between gap-10 py-10 border-b border-gray-500/30 text-gray-500">
         <div>
-          <NavLink to="/" className="text-2xl font-bold text-orange-500">
+          <NavLink
+            to="/"
+            className="text-2xl font-bold text-orange-500"
+            onClick={() => window.scrollTo(0, 0)}
+          >
             🍕 FoodOrder
           </NavLink>
           <p className="max-w-[380px] mt-6 text-sm leading-relaxed">

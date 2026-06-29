@@ -4,8 +4,10 @@ import { ChevronDown, Home, SlidersHorizontal, XIcon } from "lucide-react";
 import FilterPanel from "../components/FilterPanel";
 import ProductCard from "../components/ProductCard";
 import { categories_Data, food_list } from "../assets/assets";
+import { useAuth } from "../context/AuthContext";
 
 const Products = () => {
+  const { searchQuery } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState([]);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -22,6 +24,13 @@ const Products = () => {
   useEffect(() => {
     let filtered = [...food_list];
 
+    // search filter
+    if (searchQuery) {
+      filtered = filtered.filter((p) =>
+        p.name.toLowerCase().includes(searchQuery.toLowerCase()),
+      );
+    }
+
     if (category)
       filtered = filtered.filter(
         (p) => p.category.toLowerCase() === category.toLowerCase(),
@@ -36,7 +45,7 @@ const Products = () => {
     if (sort === "name") filtered.sort((a, b) => a.name.localeCompare(b.name));
 
     setProducts(filtered);
-  }, [category, sort, minPrice, maxPrice]);
+  }, [category, sort, minPrice, maxPrice, searchQuery]);
 
   const updateFilter = (key, value) => {
     const newParams = new URLSearchParams(searchParams);
