@@ -151,7 +151,7 @@ export const categoriesData = [
   { slug: "deserts", name: "Deserts", image: menu_3 },
   { slug: "sandwich", name: "Sandwich", image: menu_4 },
   { slug: "cake", name: "Cake", image: menu_5 },
-  { slug: "veg", name: "Pure Veg", image: menu_6 },
+  { slug: "Pure Veg", name: "Pure Veg", image: menu_6 },
   { slug: "pasta", name: "Pasta", image: menu_7 },
   { slug: "noodles", name: "Noodles", image: menu_8 },
   { slug: "biryani", name: "Biryani", image: menu_9 },
