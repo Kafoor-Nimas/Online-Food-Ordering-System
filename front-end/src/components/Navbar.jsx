@@ -19,7 +19,7 @@ const Navbar = () => {
 
   useEffect(() => {
     if (searchQuery.length > 0) {
-      navigate("/products");
+      navigate("/menu");
     }
   }, [searchQuery]);
   return (
