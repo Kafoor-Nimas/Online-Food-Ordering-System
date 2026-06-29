@@ -12,6 +12,7 @@ import basket_icon from "./basket_icon.png";
 import logo from "./logo.png";
 import header_img from "./header_img.png";
 import search_icon from "./search_icon.png";
+import menu_icon from "./menu_icon.svg";
 import menu_1 from "./salad3.png";
 import menu_2 from "./rolls.png";
 import menu_3 from "./dessert.png";
@@ -24,38 +25,6 @@ import menu_9 from "./biryani.png";
 import menu_10 from "./beverages2.png";
 import nav_cart_icon from "./nav_cart_icon.svg";
 
-import food_1 from "./food_1.png";
-import food_2 from "./food_2.png";
-import food_3 from "./food_3.png";
-import food_4 from "./food_4.png";
-import food_5 from "./food_5.png";
-import food_6 from "./food_6.png";
-import food_7 from "./food_7.png";
-import food_8 from "./food_8.png";
-import food_9 from "./food_9.png";
-import food_10 from "./food_10.png";
-import food_11 from "./food_11.png";
-import food_12 from "./food_12.png";
-import food_13 from "./food_13.png";
-import food_14 from "./food_14.png";
-import food_15 from "./food_15.png";
-import food_16 from "./food_16.png";
-import food_17 from "./food_17.png";
-import food_18 from "./food_18.png";
-import food_19 from "./food_19.png";
-import food_20 from "./food_20.png";
-import food_21 from "./food_21.png";
-import food_22 from "./food_22.png";
-import food_23 from "./food_23.png";
-import food_24 from "./food_24.png";
-import food_25 from "./food_25.png";
-import food_26 from "./food_26.png";
-import food_27 from "./food_27.png";
-import food_28 from "./food_28.png";
-import food_29 from "./food_29.png";
-import food_30 from "./food_30.png";
-import food_31 from "./food_31.png";
-import food_32 from "./food_32.png";
 import food_a from "./food_a.png";
 import food_b from "./food_b.png";
 import food_c from "./food_c.png";
@@ -130,6 +99,7 @@ export const assets = {
   bag_icon,
   parcel_icon,
   nav_cart_icon,
+  menu_icon,
 };
 
 export const heroSectionData = {

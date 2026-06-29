@@ -27,10 +27,9 @@ const Products = () => {
     // search filter
     if (searchQuery) {
       filtered = filtered.filter((p) =>
-        p.name.toLowerCase().includes(searchQuery.toLowerCase()),
+        p.name.toLowerCase().includes(String(searchQuery).toLowerCase()),
       );
     }
-
     if (category)
       filtered = filtered.filter(
         (p) => p.category.toLowerCase() === category.toLowerCase(),
