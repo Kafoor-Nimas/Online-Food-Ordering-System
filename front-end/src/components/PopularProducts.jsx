@@ -4,7 +4,7 @@ import { ArrowRightIcon } from "lucide-react";
 import toast from "react-hot-toast";
 import ProductCard from "./ProductCard";
 import api from "../config/api";
-import { food_list } from "../assets/assets";
+import { food_list_home } from "../assets/assets";
 
 const PopularProducts = () => {
   const [products, setProducts] = useState([]);
@@ -19,7 +19,7 @@ const PopularProducts = () => {
     //     toast.error(error.response.data.message || error?.message);
     //   });
     // Using dummy data until backend products are seeded
-    const formatted = food_list.slice(0, 10).map((p) => ({
+    const formatted = food_list_home.slice(0, 10).map((p) => ({
       ...p,
 
       rating: 4.5,
