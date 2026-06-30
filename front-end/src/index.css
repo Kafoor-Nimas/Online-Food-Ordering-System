@@ -47,3 +47,35 @@ body {
 .flex-center {
   @apply flex items-center justify-center;
 }
+
+.order-tracker {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+
+.tracker-step {
+  text-align: center;
+  opacity: 0.4;
+}
+
+.tracker-step.active {
+  opacity: 1;
+}
+
+.tracker-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 8px;
+}
+
+.tracker-step.active .tracker-circle {
+  background: #28a745;
+  color: white;
+}
