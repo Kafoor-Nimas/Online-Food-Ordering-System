@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
@@ -13,21 +13,23 @@ import AdminPage from "./pages/admin";
 
 function AppContent() {
   const { showUserLogin } = useAuth();
+  const location = useLocation();
+  const isAdminPage = location.pathname.startsWith("/admin");
+
   return (
     <>
       <Toaster position="top-right" />
-      <Navbar />
+      {!isAdminPage && <Navbar />}
       {showUserLogin && <Login />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/admin/*" element={<AdminPage/>}/>
         <Route path="/menu" element={<AllProducts />} />
-        <Route path="/menu" element={<Menu />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         
       </Routes>
-      <Footer />
+      {!isAdminPage && <Footer />}
     </>
   );
 }
