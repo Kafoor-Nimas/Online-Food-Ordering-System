@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import { AuthProvider } from "./context/AuthContext";
 import { useAuth } from "./context/AuthContext";
 import AllProducts from "./pages/Products";
+import AdminPage from "./pages/admin";
 
 function AppContent() {
   const { showUserLogin } = useAuth();
@@ -19,10 +20,12 @@ function AppContent() {
       {showUserLogin && <Login />}
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/admin/*" element={<AdminPage/>}/>
         <Route path="/menu" element={<AllProducts />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        
       </Routes>
       <Footer />
     </>
