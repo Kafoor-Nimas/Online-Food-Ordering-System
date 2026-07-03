@@ -2,21 +2,24 @@ import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema(
   {
-    orderId: {type: String, required: true, unique: true},
+    orderId: { type: String, required: true, unique: true },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "user",
       required: true,
     },
     items: [
-      {
-        productId: { type: mongoose.Schema.Types.ObjectId, ref: "productId" },
-        name: String,
-        price: Number,
-        quantity: Number,
-        image: String,
+    {
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "product"
       },
-    ],
+      name: String,
+      price: Number,
+      quantity: Number,
+      image: String
+    }
+  ],
     shippingAddress: { type: String, required: true },
     paymentMethod: { type: String, default: "cash" },
     total: { type: Number, required: true },
@@ -32,8 +35,9 @@ const orderSchema = new mongoose.Schema(
       ],
       default: "Placed",
     },
-    email: {type: String, required: true},
-    phone: {type: String, required: true},
+    notes: { type: String, default: "" },
+    email: { type: String, required: true },
+    phone: { type: String, required: true },
   },
   { timestamps: true },
 );

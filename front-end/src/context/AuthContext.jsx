@@ -33,8 +33,10 @@ export function AuthProvider({ children }) {
       localStorage.setItem("auth_user", JSON.stringify(data.user));
       toast.success("Login successful!");
       navigate("/");
+      return true;
     } catch (error) {
       toast.error(error?.response?.data?.message || "Login failed");
+      return false;
     }
   };
 
@@ -51,8 +53,10 @@ export function AuthProvider({ children }) {
       localStorage.setItem("auth_user", JSON.stringify(data.user));
       toast.success("Registration successful!");
       navigate("/");
+      return true;
     } catch (error) {
       toast.error(error?.response?.data?.message || "Registration failed");
+      return false;
     }
   };
 

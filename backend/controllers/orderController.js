@@ -3,162 +3,215 @@ import ProductModel from "../models/ProductModel.js";
 import { isAdmin } from "./authController.js";
 
 export async function createOrder(req, res) {
-	
-    if (!req.user == null) {
-        console.log(req.user)
-        res.status(401).json({ message: "Unauthorized. Please log in to place an order." });
-        return;
+
+    if (!req.user) {
+        return res.status(401).json({
+            message: "Unauthorized. Please log in to place an order."
+        });
     }
 
-	try {
-		const orderData = {
-			orderId: "ORD000001",
-            userId: req.user._id,
-            name: req.body.name,
+    try {
+
+        if (!req.body.shippingAddress) {
+            return res.status(400).json({
+                message: "Shipping address is required"
+            });
+        }
+
+        if (!req.body.phone) {
+            return res.status(400).json({
+                message: "Phone number is required"
+            });
+        }
+
+        if (!req.body.items || req.body.items.length === 0) {
+            return res.status(400).json({
+                message: "Order must contain at least one item"
+            });
+        }
+
+        const userId = req.user?.id || req.user?._id;
+
+        if (!userId) {
+            return res.status(401).json({
+                message: "Unauthorized. Invalid user information in token."
+            });
+        }
+
+        const orderData = {
+            orderId: "ORD000001",
+            userId,
             items: [],
-			shippingAddress: req.body.shippingAddress,
-			paymentMethod: req.body.paymentMethod || "cash",
+            shippingAddress: req.body.shippingAddress,
+            paymentMethod: req.body.paymentMethod || "cash",
             total: 0,
-            status: req.body.status || "Placed",
-			email: req.body.email,
-			phone: req.body.phone,
-			
-		};
+            status: "Placed",
+            email: req.user.email,
+            phone: req.body.phone,
+        };
 
-        if(orderData.name == ""){
-            orderData.name = req.user.name
+        const lastOrder = await OrderModel.findOne().sort({ createdAt: -1 });
+
+        if (lastOrder) {
+
+            const lastNumber = parseInt(
+                lastOrder.orderId.replace("ORD", "")
+            );
+
+            const newNumber = lastNumber + 1;
+
+            orderData.orderId =
+                "ORD" + newNumber.toString().padStart(6, "0");
         }
-        if(orderData.shippingAddress == ""){
-            res.status(400).json({ message : "Shipping address is required" })
-            return
-        }
-        
 
-		const lastOrder = await OrderModel.findOne().sort({ date: -1 });
+        for (const item of req.body.items) {
 
-		if (lastOrder != null) {
-			const lastOrderId = lastOrder.orderId; 
+            const product = await ProductModel.findOne({
+                productId: item.productId
+            });
 
-			const lastOrderNumberInString = lastOrderId.replace("ORD", ""); 
-
-			const lastOrderNumber = parseInt(lastOrderNumberInString);
-
-			const newOrderNumber = lastOrderNumber + 1;
-
-			const newOrderNumberInString = newOrderNumber.toString().padStart(6, "0");
-			orderData.orderId = "ORD" + newOrderNumberInString;
-
-
-		}
-
-        for(let i = 0; i< req.body.items.length; i++){
-
-            const item = req.body.items[i]
-
-            const product = await ProductModel.findOne({ productId : item.productId })
-
-            if(product == null){
-
-                res.status(404).json({ message : "Product with id " + item.productId + " not found. Please remove it from your cart and try again." })
-                return
+            if (!product) {
+                return res.status(404).json({
+                    message: `Product ${item.productId} not found`
+                });
             }
 
-            if(product.isAvailable == false){
-                res.status(404).json({ message : "Product with id " + item.productId + " is not available. Please remove it from your cart and try again." })
-                return
+            if (!product.isAvailable) {
+                return res.status(400).json({
+                    message: `${product.name} is unavailable`
+                });
+            }
+
+            if (product.stock < item.quantity) {
+                return res.status(400).json({
+                    message: `Only ${product.stock} items available for ${product.name}`
+                });
             }
 
             orderData.items.push({
-                productId : product.productId,
-                name : product.name,
-                price : product.price,
-                originalPrice : product.originalPrice,
-                image : product.image[0],
-                quantity : item.quantity
-            })
+                product: product._id,
+                name: product.name,
+                price: product.price,
+                quantity: item.quantity,
+                image: product.image
+            });
 
-            orderData.total += product.price * item.quantity
+            orderData.total += product.price * item.quantity;
+
+            product.stock -= item.quantity;
+            await product.save();
         }
-        
+
         const order = new OrderModel(orderData);
+
         await order.save();
 
-        res.status(201).json({ message: "Order created successfully", orderId : orderData.orderId });
+        res.status(201).json({
+            message: "Order created successfully",
+            orderId: order.orderId
+        });
 
-	} catch (error) {
-		console.log("Error creating order", error);
-		res.status(500).json({ message: "Error creating order", error: error });
-	}
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+            message: "Error creating order",
+            error: error.message
+        });
+    }
 }
 
-export async function getOrders(req,res){
+export async function getOrders(req, res) {
 
-    if (req.user == null) {
-        res.status(401).json({ message: "Unauthorized. Please log in to view your orders." });
-        return;
+    if (!req.user) {
+        return res.status(401).json({
+            message: "Unauthorized"
+        });
     }
 
-    const pageSizeInString = req.params.pageSize || "10"
+    const pageSize = parseInt(req.params.pageSize || "10");
 
-    const pageNumberInString = req.params.pageNumber || "1"
+    const pageNumber = parseInt(req.params.pageNumber || "1");
 
-    const pageSize = parseInt(pageSizeInString)
+    try {
 
-    const pageNumber = parseInt(pageNumberInString)
+        const filter = isAdmin(req)
+            ? {}
+            : { email: req.user.email };
 
-    try{
+        const totalOrders =
+            await OrderModel.countDocuments(filter);
 
-        if(isAdmin(req)){
+        const totalPages =
+            Math.ceil(totalOrders / pageSize);
 
-            const numberOfOrders = await OrderModel.countDocuments()
+        const orders = await OrderModel.find(filter)
+            .sort({ createdAt: -1 })
+            .skip((pageNumber - 1) * pageSize)
+            .limit(pageSize);
 
-            const numberOfPages = Math.ceil(numberOfOrders / pageSize)
+        res.json({
+            orders,
+            totalPages
+        });
 
-            const orders = await OrderModel.find().sort({ date : -1 }).skip((pageNumber - 1) * pageSize).limit(pageSize)
+    } catch (error) {
 
-            res.json({
-                orders : orders,
-                totalPages : numberOfPages
-            })
-        }else{
-            const numberOfOrders = await OrderModel.countDocuments()
+        console.log(error);
 
-            const numberOfPages = Math.ceil(numberOfOrders / pageSize)
+        res.status(500).json({
+            message: "Error fetching orders",
+            error: error.message
+        });
+    }
+}
 
-            const orders = await OrderModel.find({email : req.user.email}).sort({ date : -1 }).skip((pageNumber - 1) * pageSize).limit(pageSize)
+export async function updateOrderStatusAndNotes(req, res) {
 
-            res.json({
-                orders : orders,
-                totalPages : numberOfPages
-            })
+    if (!isAdmin(req)) {
+        return res.status(403).json({
+            message: "Forbidden"
+        });
+    }
+
+    try {
+
+        const order = await OrderModel.findOneAndUpdate(
+
+            {
+                orderId: req.params.orderId
+            },
+
+            {
+                status: req.body.status,
+                notes: req.body.notes
+            },
+
+            {
+                new: true
+            }
+
+        );
+
+        if (!order) {
+            return res.status(404).json({
+                message: "Order not found"
+            });
         }
 
-}   catch(error){
-        console.log("Error fetching orders", error)
-        res.status(500).json({ message : "Error fetching orders", error : error })
-    }
+        res.json({
+            message: "Order updated successfully",
+            order
+        });
 
-}
+    } catch (error) {
 
-export async function updateOrderStatusAndNotes(req,res){
+        console.log(error);
 
-    if(isAdmin(req)){
-
-        const orderId = req.params.orderId
-        try{
-
-            await OrderModel.updateOne({ orderId : orderId }, { status : req.body.status, notes : req.body.notes })
-
-            res.json({ message : "Order status and notes updated successfully" })
-
-        }catch(error){
-            console.log("Error updating order status and notes", error)
-            res.status(500).json({ message : "Error updating order status and notes", error : error })
-            return
-        }       
-
-    }
-    else{
-        res.status(403).json({ message : "Forbidden. Only admins can update order status and notes." })
+        res.status(500).json({
+            message: "Error updating order",
+            error: error.message
+        });
     }
 }
