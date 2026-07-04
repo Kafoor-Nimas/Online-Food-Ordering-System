@@ -9,18 +9,19 @@ import {
   getProductById,
   searchProducts,
 } from "../controllers/productController.js";
+import auth from "../middleware/auth.js";
 
 const productRouter = express.Router();
 
-// Menu page routes (your functions)
+// Public routes — no auth needed
 productRouter.get("/", getProductsForMenu);
 productRouter.get("/search/:query", searchProducts);
-
-// Admin routes (her functions)
-productRouter.get("/all", getProducts);
-productRouter.post("/", createProduct);
-productRouter.delete("/:productId", deleteProduct);
-productRouter.put("/:productId", updateProduct);
 productRouter.get("/:productId", getProductById);
+
+// Admin routes — auth required
+productRouter.get("/all", auth, getProducts);
+productRouter.post("/", auth, createProduct);
+productRouter.delete("/:productId", auth, deleteProduct);
+productRouter.put("/:productId", auth, updateProduct);
 
 export default productRouter;

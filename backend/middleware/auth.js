@@ -2,7 +2,11 @@ import jwt from "jsonwebtoken";
 
 const auth = (req, res, next) => {
   try {
-    const authHeader = req.get?.("authorization") || req.get?.("x-access-token") || req.headers.authorization || req.headers["x-access-token"];
+    const authHeader =
+      req.get?.("authorization") ||
+      req.get?.("x-access-token") ||
+      req.headers.authorization ||
+      req.headers["x-access-token"];
     let token = "";
 
     if (typeof authHeader === "string") {
@@ -23,7 +27,10 @@ const auth = (req, res, next) => {
 
     if (typeof token === "string") {
       token = token.trim().replace(/^"|"$/g, "");
-      if (token.toLowerCase() === "null" || token.toLowerCase() === "undefined") {
+      if (
+        token.toLowerCase() === "null" ||
+        token.toLowerCase() === "undefined"
+      ) {
         token = "";
       }
     }
