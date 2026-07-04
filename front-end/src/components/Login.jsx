@@ -1,8 +1,6 @@
 import React from "react";
 
-import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
-import axios from "axios";
 
 const Login = () => {
   const [state, setState] = React.useState("login");
@@ -10,32 +8,18 @@ const Login = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-  const { setShowUserLogin, setUser, navigate } = useAuth();
+  const { setShowUserLogin, login, register } = useAuth();
 
   const onSubmitHandler = async (e) => {
-    try {
-      e.preventDefault();
+    e.preventDefault();
 
-      const { data } = await axios.post(`/api/user/${state}`, {
-        name,
-        email,
-        password,
-      });
+    const success =
+      state === "register"
+        ? await register(name, email, password)
+        : await login(email, password);
 
-      if (data.success) {
-        toast.success(
-          state === "register"
-            ? "Account created successfully!"
-            : "Logged in successfully!",
-        );
-        navigate("/");
-        setUser(data.user);
-        setShowUserLogin(false);
-      } else {
-        toast.error(data.message);
-      }
-    } catch (error) {
-      toast.error(error.message);
+    if (success) {
+      setShowUserLogin(false);
     }
   };
 
