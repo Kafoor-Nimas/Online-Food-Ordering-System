@@ -4,6 +4,7 @@ import LoadingComponent from '../../components/Loading';
 import axios from 'axios';
 import { CiEdit } from 'react-icons/ci';
 import { FaPlus } from 'react-icons/fa';
+import DeleteModel from '../../components/deleteModel';
 
 export default function AdminProductPage() {
 
@@ -227,6 +228,7 @@ export default function AdminProductPage() {
                   className="w-9 h-9 flex items-center justify-center rounded-full text-app-text-light hover:text-app-orange hover:bg-app-orange/10 transition-colors" title="Edit product">
                   <CiEdit className="text-lg"/>
                 </Link>
+                 <DeleteModel product={item} setLoading={setLoading}/>
               </div>
             </td>
           </tr>
