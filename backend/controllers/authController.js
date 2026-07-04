@@ -8,135 +8,170 @@ export const register = async (req, res) => {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
-      return res.status(400).json({ message: "All fields are required" });
+      return res.status(400).json({
+        message: "All fields are required",
+      });
     }
 
-    const existingUser = await UserModel.findOne({ email });
+    const existingUser = await UserModel.findOne({
+      email: email.trim(),
+    });
+
     if (existingUser) {
-      return res.status(400).json({ message: "Email already exists" });
+      return res.status(400).json({
+        message: "Email already exists",
+      });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+
     const user = await UserModel.create({
       name,
-      email,
+      email: email.trim(),
       password: hashedPassword,
     });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
-    });
-
-    res.status(201).json({
-      token,
-      success: true,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      },
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-    toast.error(error.response?.data?.message || error.message);
-  }
-};
-
-// POST /api/auth/login
-export const login = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-
-    const user = await UserModel.findOne({ email });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
-
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
-    });
-
-    res.json({
-      token,
-      success: true,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      },
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-    toast.error(error.response?.data?.message || error.message);
-  }
-};
-
-export async function updateUserProfile(req, res) {
-  if (req.user == null) {
-    res.status(401).json({
-      message: "Unauthorized",
-    });
-    return;
-  }
-  try {
-    await UserModel.updateOne(
-      { email: req.user.email },
-      {
-        name: req.body.name,
-        avatar: req.body.avatar,
-      },
-    );
-    const user = await UserModel.findOne({ email: req.user.email });
     const token = jwt.sign(
       {
+        id: user._id,
         email: user.email,
         name: user.name,
         role: user.role,
         avatar: user.avatar,
       },
       process.env.JWT_SECRET,
-      { expiresIn: req.body.rememberme ? "30d" : "48h" },
+      {
+        expiresIn: "7d",
+      }
     );
-    res.json({ message: "Profile updated successfully", token: token });
-  } catch (error) {
-    res.status(500).json({ message: "Error updating profile", error: error });
-  }
-}
 
-export async function changeUserPassword(req, res) {
-  if (req.user == null) {
-    res.status(401).json({
+    res.status(201).json({
+      success: true,
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+// POST /api/auth/login
+export const login = async (req, res) => {
+  try {
+    const email = req.body.email.trim();
+    const password = req.body.password;
+
+    const user = await UserModel.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(400).json({
+        message: "Invalid credentials",
+      });
+    }
+
+    const token = jwt.sign(
+      {
+        id: user._id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        avatar: user.avatar,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "7d",
+      }
+    );
+
+    res.json({
+      success: true,
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+export async function updateUserProfile(req, res) {
+  if (!req.user) {
+    return res.status(401).json({
       message: "Unauthorized",
     });
-    return;
   }
 
   try {
-    const hashedPassword = bcrypt.hashSync(req.body.password, 10);
-
     await UserModel.updateOne(
       { email: req.user.email },
-      { password: hashedPassword },
+      {
+        name: req.body.name,
+        avatar: req.body.avatar,
+      }
     );
-    res.json({ message: "Password changed successfully" });
+
+    const user = await UserModel.findOne({
+      email: req.user.email,
+    });
+
+    const token = jwt.sign(
+      {
+        id: user._id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        avatar: user.avatar,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: req.body.rememberme ? "30d" : "48h",
+      }
+    );
+
+    res.json({
+      message: "Profile updated successfully",
+      token,
+    });
   } catch (error) {
-    res.status(500).json({ message: "Error changing password", error: error });
+    console.error(error);
+
+    res.status(500).json({
+      message: "Error updating profile",
+    });
   }
 }
-
 export function isAdmin(req) {
   if (req.user == null) {
     return false;
   }
 
   if (req.user.role == "admin") {
+      console.log(req.user.role);
     return true;
   } else {
     return false;
