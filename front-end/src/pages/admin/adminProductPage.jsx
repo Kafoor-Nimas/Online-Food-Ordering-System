@@ -222,10 +222,7 @@ export default function AdminProductPage() {
 
             <td className="px-5 py-4">
               <div className="flex justify-center items-center">
-                <Link
-                  to="/admin/update-product"
-                  state={item}
-                  className="w-9 h-9 flex items-center justify-center rounded-full text-app-text-light hover:text-app-orange hover:bg-app-orange/10 transition-colors" title="Edit product">
+                <Link to={`/admin/update-product/${item._id}`} state={item} className="w-9 h-9 flex items-center justify-center rounded-full text-orange-500 hover:text-orange-600 hover:bg-orange-100 transition-colors" title="Edit product">
                   <CiEdit className="text-lg"/>
                 </Link>
                  <DeleteModel product={item} setLoading={setLoading}/>
@@ -238,15 +235,14 @@ export default function AdminProductPage() {
 
   </table>
   </div>
-               )}
+    )}
 </div>
 </div>
 
              <Link
                to="/admin/add-product"
                className="group text-white bg-app-orange hover:bg-app-orange-dark w-14 h-14 flex justify-center items-center text-2xl rounded-2xl hover:rounded-full fixed bottom-10 right-10 shadow-lg shadow-app-orange/30 transition-all duration-300"
-               title="Add product"
-             >
+               title="Add product">
                 <FaPlus className="transition-transform duration-300 group-hover:rotate-90"/>
              </Link>
         </div>
