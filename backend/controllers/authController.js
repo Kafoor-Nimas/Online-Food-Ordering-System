@@ -42,7 +42,7 @@ export const register = async (req, res) => {
       process.env.JWT_SECRET,
       {
         expiresIn: "7d",
-      }
+      },
     );
 
     res.status(201).json({
@@ -67,8 +67,13 @@ export const register = async (req, res) => {
 // POST /api/auth/login
 export const login = async (req, res) => {
   try {
-    const email = req.body.email.trim();
-    const password = req.body.password;
+    const { email: rawEmail, password } = req.body;
+
+    if (!rawEmail || !password) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    const email = rawEmail.trim();
 
     const user = await UserModel.findOne({ email });
 
@@ -97,7 +102,7 @@ export const login = async (req, res) => {
       process.env.JWT_SECRET,
       {
         expiresIn: "7d",
-      }
+      },
     );
 
     res.json({
@@ -132,7 +137,7 @@ export async function updateUserProfile(req, res) {
       {
         name: req.body.name,
         avatar: req.body.avatar,
-      }
+      },
     );
 
     const user = await UserModel.findOne({
@@ -150,7 +155,7 @@ export async function updateUserProfile(req, res) {
       process.env.JWT_SECRET,
       {
         expiresIn: req.body.rememberme ? "30d" : "48h",
-      }
+      },
     );
 
     res.json({
@@ -171,7 +176,7 @@ export function isAdmin(req) {
   }
 
   if (req.user.role == "admin") {
-      console.log(req.user.role);
+    console.log(req.user.role);
     return true;
   } else {
     return false;
