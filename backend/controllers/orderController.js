@@ -267,7 +267,12 @@ export async function updateOrderStatusAndNotes(req, res) {
 
 export const getMyOrders = async (req, res) => {
   try {
-    const orders = await OrderModel.find({ userId: req.user._id }).sort({
+    // const orders = await OrderModel.find({ userId: req.user._id })
+    const userId = req.user.id || req.user._id; // ← handle both
+
+    const orders = await OrderModel.find({
+      userId: req.user.id || req.user._id,
+    }).sort({
       createdAt: -1,
     });
     res.json({ success: true, orders });
