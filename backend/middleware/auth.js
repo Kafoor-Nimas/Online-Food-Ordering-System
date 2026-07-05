@@ -35,13 +35,6 @@ const auth = (req, res, next) => {
       }
     }
 
-    console.log("Auth middleware:", {
-      path: req.path,
-      authHeader: req.headers.authorization,
-      tokenLength: typeof token === "string" ? token.length : 0,
-      tokenSample: typeof token === "string" ? token.slice(0, 20) : null,
-    });
-
     if (!token) {
       return res.status(401).json({
         message: "No token provided",
