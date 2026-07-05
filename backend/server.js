@@ -11,10 +11,17 @@ dotenv.config();
 connectDB();
 
 const app = express();
-app.use(cors({
-    origin: "http://localhost:5173",
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || origin.startsWith("http://localhost")) {
+        return callback(null, true);
+      }
+      callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
-}));
+  }),
+);
 app.use(express.json());
 
 const port = process.env.PORT || 5000;
@@ -27,5 +34,5 @@ app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
 
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server running at http://localhost:${port}`);
 });
