@@ -9,7 +9,7 @@ const ProductCard = ({ product }) => {
   const navigate = useNavigate();
   return (
     <div
-      onClick={() => navigate(`/products/${product.id}`)}
+      onClick={() => navigate(`/products/${product._id || product.id}`)}
       className="bg-white rounded-2xl overflow-hidden shadow hover:shadow-md transition-all duration-300 group animate-fade-in cursor-pointer"
     >
       {/* Image */}

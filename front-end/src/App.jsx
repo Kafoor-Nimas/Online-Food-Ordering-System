@@ -14,6 +14,7 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import MyOrders from "./pages/MyOrders";
 import { CartProvider } from "./context/CartContext";
+import ProductDetails from "./pages/ProductDetails";
 
 function AppContent() {
   const { showUserLogin } = useAuth();
@@ -34,6 +35,8 @@ function AppContent() {
         <Route path="/my-orders" element={<MyOrders />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/products/:id" element={<ProductDetails />} />
+        
       </Routes>
       {!isAdminPage && <Footer />}
     </>
