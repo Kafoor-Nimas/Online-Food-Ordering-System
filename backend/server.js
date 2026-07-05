@@ -6,6 +6,7 @@ import authRouter from "./routes/authRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import userRouter from "./router/userRouter.js";
 import orderRouter from "./routes/orderRoutes.js";
+import reviewRoutes from "./routes/reviewRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -32,6 +33,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
+app.use("/api/reviews", reviewRoutes);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
