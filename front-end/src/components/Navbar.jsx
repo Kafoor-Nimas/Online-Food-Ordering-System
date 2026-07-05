@@ -94,6 +94,12 @@ const Navbar = () => {
               >
                 Logout
               </li>
+              <li
+                onClick={() => navigate("/admin")}
+                className="p-1.5 pl-3 hover:bg-primary/10 cursor-pointer"
+              >
+                Admin Panel
+              </li>
             </ul>
           </div>
         )}
