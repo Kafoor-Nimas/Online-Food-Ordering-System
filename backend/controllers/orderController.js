@@ -82,12 +82,6 @@ export async function createOrder(req, res) {
                 });
             }
 
-            if (product.stock < item.quantity) {
-                return res.status(400).json({
-                    message: `Only ${product.stock} items available for ${product.name}`
-                });
-            }
-
             orderData.items.push({
                 product: product._id,
                 name: product.name,
@@ -98,7 +92,6 @@ export async function createOrder(req, res) {
 
             orderData.total += product.price * item.quantity;
 
-            product.stock -= item.quantity;
             await product.save();
         }
 
