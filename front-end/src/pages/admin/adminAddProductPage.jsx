@@ -85,22 +85,22 @@ return(
 
                     <div className="flex flex-col">
                         <label className="font-semibold text-sm text-app-text mb-1.5 ml-0.5">Name :</label>
-                        <input value={name} onChange={(e)=>{setName(e.target.value)}} type="text" placeholder="Ex: Laptop" className="border border-app-border rounded-lg h-11 sm:h-12 px-3.5 text-sm sm:text-base text-app-text bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"/>
+                        <input value={name} onChange={(e)=>{setName(e.target.value)}} type="text" placeholder="Ex: Pizza" className="border border-app-border rounded-lg h-11 sm:h-12 px-3.5 text-sm sm:text-base text-app-text bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"/>
                     </div>
 
                     <div className="flex flex-col sm:col-span-2">
                         <label className="font-semibold text-sm text-app-text mb-1.5 ml-0.5">Description :</label>
-                        <textarea value={description} onChange={(e)=>{setDescription(e.target.value)}} placeholder="Ex: Laptop" rows={4} className="border border-app-border rounded-lg p-3.5 text-sm sm:text-base text-app-text bg-white resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"/>
+                        <textarea value={description} onChange={(e)=>{setDescription(e.target.value)}} placeholder="Ex: Delicious pizza with various toppings" rows={4} className="border border-app-border rounded-lg p-3.5 text-sm sm:text-base text-app-text bg-white resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"/>
                     </div>
 
                     <div className="flex flex-col">
                         <label className="font-semibold text-sm text-app-text mb-1.5 ml-0.5">Price :</label>
-                        <input value={price} onChange={(e)=>{setPrice(e.target.value)}} type="text" placeholder="Ex: 5000" className="border border-app-border rounded-lg h-11 sm:h-12 px-3.5 text-sm sm:text-base text-app-text bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"/>
+                        <input value={price} onChange={(e)=>{setPrice(e.target.value)}} type="text" placeholder="Ex: 500" className="border border-app-border rounded-lg h-11 sm:h-12 px-3.5 text-sm sm:text-base text-app-text bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"/>
                     </div>
 
                     <div className="flex flex-col">
                         <label className="font-semibold text-sm text-app-text mb-1.5 ml-0.5">Original Price :</label>
-                        <input value={originalPrice} onChange={(e)=>{setOriginalPrice(e.target.value)}} type="text" placeholder="Ex: 5000" className="border border-app-border rounded-lg h-11 sm:h-12 px-3.5 text-sm sm:text-base text-app-text bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"/>
+                        <input value={originalPrice} onChange={(e)=>{setOriginalPrice(e.target.value)}} type="text" placeholder="Ex: 750" className="border border-app-border rounded-lg h-11 sm:h-12 px-3.5 text-sm sm:text-base text-app-text bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"/>
                     </div>
 
                     <div className="flex flex-col sm:col-span-2">
@@ -127,7 +127,7 @@ return(
 
                     <div className="flex flex-col">
                         <label className="font-semibold text-sm text-app-text mb-1.5 ml-0.5">Unit :</label>
-                        <input value={unit} onChange={(e)=>{setUnit(e.target.value)}} type="text" placeholder="Ex: kg" className="border border-app-border rounded-lg h-11 sm:h-12 px-3.5 text-sm sm:text-base text-app-text bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"/>
+                        <input value={unit} onChange={(e)=>{setUnit(e.target.value)}} type="text" placeholder="kg" className="border border-app-border rounded-lg h-11 sm:h-12 px-3.5 text-sm sm:text-base text-app-text bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"/>
                     </div>
 
                     <div className="flex flex-col">
