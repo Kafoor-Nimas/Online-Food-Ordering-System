@@ -45,7 +45,7 @@ The Online Food Ordering System is a full-stack web application that allows cust
 ### Tools & Platforms
 - **GitHub** - Version control and collaboration
 - **MongoDB Atlas** - Cloud database hosting
-- **Postman / Thunder Client** - API testing
+- **Postman and Thunder Client** - API testing
 - **VS Code** - Code editor
 
 ---
@@ -72,7 +72,7 @@ npm install
 
 Create a `.env` file inside the `backend` folder:
 ```env
-MONGODB_URI=your_mongodb_connection_string
+MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_key
 PORT=5000
 ```
