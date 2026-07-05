@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { Plus, Star } from "lucide-react";
+import { useCart } from "../context/CartContext";
 
 const ProductCard = ({ product }) => {
   const currency = import.meta.env.VITE_CURRENCY_SYMBOL || "Rs.";
+  const { addToCart } = useCart();
 
   const navigate = useNavigate();
   return (
@@ -66,7 +68,7 @@ const ProductCard = ({ product }) => {
           <button
             onClick={(e) => {
               e.stopPropagation();
-              //   addToCart(product);
+              addToCart(product);
             }}
             className="size-7 rounded-full bg-app-orange text-white flex-center shrink-0 hover:bg-app-orange-dark transition-colors active:scale-95"
           >

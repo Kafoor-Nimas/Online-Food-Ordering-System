@@ -132,12 +132,21 @@ export async function updateUserProfile(req, res) {
   }
 
   try {
+    const updateData = {
+      name: req.body.name,
+      avatar: req.body.avatar,
+    };
+
+    if (req.body.address !== undefined) {
+      updateData.address = req.body.address;
+    }
+    if (req.body.phone !== undefined) {
+      updateData.phone = req.body.phone;
+    }
+
     await UserModel.updateOne(
       { email: req.user.email },
-      {
-        name: req.body.name,
-        avatar: req.body.avatar,
-      },
+      updateData,
     );
 
     const user = await UserModel.findOne({
@@ -161,6 +170,15 @@ export async function updateUserProfile(req, res) {
     res.json({
       message: "Profile updated successfully",
       token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        avatar: user.avatar,
+        address: user.address,
+        phone: user.phone,
+      },
     });
   } catch (error) {
     console.error(error);

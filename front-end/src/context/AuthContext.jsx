@@ -60,6 +60,33 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const updateProfile = async (profileData) => {
+    try {
+      const { data } = await api.put("/users/profile", profileData);
+      if (data.token) {
+        localStorage.setItem("auth_token", data.token);
+        setToken(data.token);
+      }
+
+      if (data.user) {
+        setUser(data.user);
+        localStorage.setItem("auth_user", JSON.stringify(data.user));
+      } else {
+        setUser((prev) => ({ ...prev, ...profileData }));
+        localStorage.setItem(
+          "auth_user",
+          JSON.stringify({ ...user, ...profileData }),
+        );
+      }
+
+      toast.success(data.message || "Profile updated successfully");
+      return true;
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Unable to update profile");
+      return false;
+    }
+  };
+
   const logout = () => {
     toast.success("Logout successfull");
     setUser(null);
@@ -78,6 +105,7 @@ export function AuthProvider({ children }) {
         loading,
         login,
         register,
+        updateProfile,
         logout,
         navigate,
         showUserLogin,

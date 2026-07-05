@@ -10,6 +10,10 @@ import { AuthProvider } from "./context/AuthContext";
 import { useAuth } from "./context/AuthContext";
 import AllProducts from "./pages/Products";
 import AdminPage from "./pages/admin";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+import MyOrders from "./pages/MyOrders";
+import { CartProvider } from "./context/CartContext";
 
 function AppContent() {
   const { showUserLogin } = useAuth();
@@ -25,9 +29,11 @@ function AppContent() {
         <Route path="/" element={<Home />} />
         <Route path="/admin/*" element={<AdminPage/>}/>
         <Route path="/menu" element={<AllProducts />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/my-orders" element={<MyOrders />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        
       </Routes>
       {!isAdminPage && <Footer />}
     </>
@@ -38,7 +44,9 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <AppContent />
+        <CartProvider>
+          <AppContent />
+        </CartProvider>
       </AuthProvider>
     </BrowserRouter>
   );
