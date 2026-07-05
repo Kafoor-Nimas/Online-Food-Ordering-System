@@ -10,12 +10,13 @@ import {
 } from "../controllers/authController.js";
 const userRouter = express.Router();
 
-userRouter.get("/all/:pageSize/:pageNumber", getAllUsers);
+userRouter.get("/all/:pageSize/:pageNumber", auth, getAllUsers);
+
 userRouter.get("/profile", auth, getUser);
 
 // userRouter.post("/update-password", changeUserPassword);
-userRouter.post("/toggle-block", blockOrUnblockUser);
-userRouter.post("/toggle-role", changeRole);
+userRouter.post("/toggle-block", auth, blockOrUnblockUser);
+userRouter.post("/toggle-role", auth, changeRole);
 userRouter.put("/profile", auth, updateUserProfile);
 
 export default userRouter;

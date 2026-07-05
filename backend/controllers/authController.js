@@ -144,10 +144,7 @@ export async function updateUserProfile(req, res) {
       updateData.phone = req.body.phone;
     }
 
-    await UserModel.updateOne(
-      { email: req.user.email },
-      updateData,
-    );
+    await UserModel.updateOne({ email: req.user.email }, updateData);
 
     const user = await UserModel.findOne({
       email: req.user.email,
@@ -194,7 +191,7 @@ export function isAdmin(req) {
   }
 
   if (req.user.role == "admin") {
-    console.log(req.user.role);
+    // console.log(req.user.role);
     return true;
   } else {
     return false;
