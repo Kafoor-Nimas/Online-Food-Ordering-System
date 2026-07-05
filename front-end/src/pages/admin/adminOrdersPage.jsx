@@ -124,7 +124,7 @@ export default function AdminOrdersPage() {
 
     useEffect(() => {
         if(loading){
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("auth_token");
 
             axios
 				.get(

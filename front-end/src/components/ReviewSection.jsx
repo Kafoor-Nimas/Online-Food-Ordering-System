@@ -29,7 +29,7 @@ export default function ReviewSection({ productId }) {
   // Review Submit 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("auth_token");
 
     if (!token) {
       return toast.error("Please login to submit a review!");

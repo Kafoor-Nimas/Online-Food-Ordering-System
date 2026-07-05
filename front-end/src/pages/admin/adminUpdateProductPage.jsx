@@ -22,7 +22,7 @@ export default function AdminUpdateProductPage() {
 
     async function handleUpdateProduct(){
         try{
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("auth_token");
 
             if(token == null){
                 toast.error("You must be logged in to update a product");

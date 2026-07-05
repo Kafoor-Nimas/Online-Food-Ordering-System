@@ -24,7 +24,7 @@ export default function DeleteModel(props){
                                 <h1 className="text-lg font-semibold text-center mt-10">Are you sure you want to delete the product with product id {product.productId}?</h1>
                                 <div className="text-sm flex justify-center items-center gap-5 mt-10">
                                     <button  onClick={  ()=>{
-                                                            const token = localStorage.getItem("token");
+                                                            const token = localStorage.getItem("auth_token");
                                                             axios.delete(import.meta.env.VITE_API_URL + "/products/" + product.productId, {
                                                             headers: {
                                                                 Authorization: "Bearer "+token

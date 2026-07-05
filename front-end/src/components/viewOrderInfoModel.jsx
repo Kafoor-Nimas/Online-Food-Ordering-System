@@ -28,7 +28,7 @@ export default function ViewOrderInfoModel({ order }) {
 
             setSaving(true);
 
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("auth_token");
 
             await axios.put(
                 import.meta.env.VITE_BASE_URL + "/orders/" + order.orderId,

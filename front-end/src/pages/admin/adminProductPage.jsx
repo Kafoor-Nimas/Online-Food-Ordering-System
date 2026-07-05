@@ -99,7 +99,7 @@ export default function AdminProductPage() {
 
   useEffect(() => {
     if (loading) {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("auth_token");
 
       axios
         .get(import.meta.env.VITE_BASE_URL + "/products/all", {
