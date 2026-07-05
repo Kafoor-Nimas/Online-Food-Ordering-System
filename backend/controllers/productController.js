@@ -20,7 +20,6 @@ export async function createProduct(req, res) {
     data.originalPrice = req.body.originalPrice || req.body.price;
     data.image = req.body.image || "/images/default-product.png";
     data.category = req.body.category || "Others";
-    data.stock = req.body.stock || 0;
     data.isAvailable = req.body.isAvailable === false ? false : true;
     const newProduct = new ProductModel(data);
     await newProduct.save();
@@ -118,7 +117,6 @@ export async function updateProduct(req, res) {
     data.category = req.body.category || "Others";
     data.image = req.body.image || "/images/default-product.png";
     data.isAvailable = req.body.isAvailable === false ? false : true;
-    data.stock = req.body.stock || 0;
     await ProductModel.updateOne({ productId: req.params.productId }, data);
     res.status(200).json({ message: "Product updated successfully" });
   } catch (error) {

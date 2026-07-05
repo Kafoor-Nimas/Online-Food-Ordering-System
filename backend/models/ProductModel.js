@@ -9,8 +9,6 @@ const productSchema = new mongoose.Schema(
     originalPrice: { type: Number, default: 0 },
     image: { type: String, required: true },
     category: { type: String, required: true },
-    stock: { type: Number, default: 0 },
-    inStock: { type: Boolean, default: true },
     unit: { type: String, default: "piece" },
     rating: { type: Number, default: 0 },
     reviewCount: { type: Number, default: 0 },
