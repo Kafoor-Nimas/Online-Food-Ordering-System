@@ -127,7 +127,7 @@ return(
 
                     <div className="flex flex-col">
                         <label className="font-semibold text-sm text-app-text mb-1.5 ml-0.5">Unit :</label>
-                        <input value={unit} onChange={(e)=>{setUnit(e.target.value)}} type="text" placeholder="kg" className="border border-app-border rounded-lg h-11 sm:h-12 px-3.5 text-sm sm:text-base text-app-text bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"/>
+                        <input value={unit} onChange={(e)=>{setUnit(e.target.value)}} type="text" placeholder="plate, bowl, glass, piece, etc." className="border border-app-border rounded-lg h-11 sm:h-12 px-3.5 text-sm sm:text-base text-app-text bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"/>
                     </div>
 
                     <div className="flex flex-col">
