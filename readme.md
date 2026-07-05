@@ -114,9 +114,9 @@ Frontend runs at: `http://localhost:5173`
 | **Search** | Real-time product search from navbar | CT/2021/004 - K. Nimas |
 | **Authentication** | User registration, login, logout with JWT | CT/2021/004 - K. Nimas |
 | **Admin Panel** | Manage products (add, edit, delete), manage users (block, role change) | CT/2021/025 - G.M. Udesika |
-| **Cart & Checkout** | Add to cart, manage quantities, place orders | CT/2021/059 - K.S.K.Y. Perera *(TBC)* |
-| **Order Management** | View orders, order history, order status | CT/2021/060 - M.M. Aththanagoda *(TBC)* |
-| **Order Tracking** | Track order status in real-time | CT/2021/073 - R.M.S.D. Rathnayake *(TBC)* |
+| **Cart & Checkout** | Add to cart, manage quantities, place orders |  CT/2021/060 - M.M. Aththanagoda |
+| **Review and Rating** | Review and Rating dishes | CT/2021/059 - K.S.K.Y. Perera  |
+| **Order Tracking** | Track order status, Order Details | CT/2021/073 - R.M.S.D. Rathnayake|
 
 ---
 
