@@ -4,6 +4,7 @@ import { assets } from "../assets/assets";
 
 import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
+import { useCart } from "../context/CartContext";
 
 const Navbar = () => {
   const [open, setOpen] = React.useState(false);
@@ -16,6 +17,7 @@ const Navbar = () => {
     searchQuery,
     setSearchQuery,
   } = useAuth();
+  const { cartQuantity } = useCart();
 
   useEffect(() => {
     if (searchQuery.length > 0) {
@@ -67,7 +69,7 @@ const Navbar = () => {
             className="w-6 opacity-80"
           />
           <button className="absolute -top-2 -right-3 text-xs text-white bg-orange-300 w-[18px] h-[18px] rounded-full">
-            0
+            {cartQuantity}
           </button>
         </div>
 
@@ -115,7 +117,7 @@ const Navbar = () => {
             className="w-6 opacity-80"
           />
           <button className="absolute -top-2 -right-3 text-xs text-white bg-primary w-[18px] h-[18px] rounded-full">
-            0
+            {cartQuantity}
           </button>
         </div>
         <button
