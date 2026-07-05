@@ -9,9 +9,9 @@
 |------------|-----------|--------------|
 | CT/2021/004 | K. Nimas | Home Page, Menu Page, Search, Authentication |
 | CT/2021/025 | G.M. Udesika | Admin Panel (Product & User Management) |
-| CT/2021/059 | K.S.K.Y. Perera | *(To be updated)* |
-| CT/2021/060 | M.M. Aththanagoda | *(To be updated)* |
-| CT/2021/073 | R.M.S.D. Rathnayake | *(To be updated)* |
+| CT/2021/059 | K.S.K.Y. Perera | Revie and Rating |
+| CT/2021/060 | M.M. Aththanagoda | Cart, Checkout, Address Managment |
+| CT/2021/073 | R.M.S.D. Rathnayake | Order Tracking, Order Details pages |
 
 ---
 
