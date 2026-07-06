@@ -217,7 +217,11 @@ export default function AdminProductPage() {
                           {item.description}
                         </td>
                         <td className="px-5 py-4 font-semibold text-app-green whitespace-nowrap">
+
+                          Rs.{item.price}
+
                           {getFormattedPrice(item.price)}
+
                         </td>
                         <td className="px-5 py-4 whitespace-nowrap">
                           <span className="inline-block px-2.5 py-1 text-xs font-medium rounded-full bg-app-green-lighter/10 text-app-green-light">

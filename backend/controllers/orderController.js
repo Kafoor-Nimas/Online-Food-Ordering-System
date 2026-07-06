@@ -204,6 +204,7 @@ export async function getOrders(req, res) {
     const totalPages = Math.ceil(totalOrders / pageSize);
 
     const orders = await OrderModel.find(filter)
+      .populate("userId", "name email")
       .sort({ createdAt: -1 })
       .skip((pageNumber - 1) * pageSize)
       .limit(pageSize);

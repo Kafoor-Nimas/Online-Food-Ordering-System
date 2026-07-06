@@ -9,6 +9,8 @@ const userSchema = new mongoose.Schema(
     address: { type: String, default: "" },
     phone: { type: String, default: "" },
     avatar: { type: String, default: "" },
+        isBlocked: { type: Boolean, default: false }, 
+
   },
   { timestamps: true },
 );
