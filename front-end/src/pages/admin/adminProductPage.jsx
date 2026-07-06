@@ -5,7 +5,8 @@ import axios from "axios";
 import { CiEdit } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
 import DeleteModel from "../../components/deleteModel";
-import getFormattedPrice from "../../../utils/price-format copy";
+import getFormattedPrice from "../../../utils/price-format";
+
 
 export default function AdminProductPage() {
   const [products, setProducts] = useState([]);
@@ -230,9 +231,9 @@ export default function AdminProductPage() {
 
                         {/* Image */}
                         <td className="px-5 py-4">
-                          {item.images && item.images[0] ? (
+                          {item.image ? (
                             <img
-                              src={item.images[0]}
+                              src={item.image}
                               alt={item.name}
                               className="w-12 h-12 object-cover rounded-xl border border-app-border shadow-sm"
                             />

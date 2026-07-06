@@ -58,7 +58,7 @@ const Checkout = () => {
       quantity: item.quantity,
       name: item.name,
       price: item.price,
-      image: item.image,
+      images: item.images,
     }));
 
     const payload = {
@@ -212,7 +212,7 @@ const Checkout = () => {
               {cartItems.map((item) => (
                 <div key={item.id} className="flex items-center gap-3">
                   <img
-                    src={item.image}
+                    src={item.images}
                     alt={item.name}
                     className="h-20 w-20 rounded-3xl object-cover"
                   />

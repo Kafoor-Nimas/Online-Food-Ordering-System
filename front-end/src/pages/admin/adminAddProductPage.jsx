@@ -39,31 +39,40 @@ export default function AdminAddProductPage() {
       await axios.post(
         import.meta.env.VITE_BASE_URL + "/products",
         {
-          productId: productId,
-          name: name,
-          description: description,
-          price: price,
-          originalPrice: originalPrice,
-          category: category,
-          unit: unit,
-          rating: rating,
-          reviewCount: reviewCount,
-          isAvailable: isAvailable,
-          images: imageURLs,
+          productId,
+          name,
+          description,
+          price,
+          originalPrice,
+          category,
+          unit,
+          rating,
+          reviewCount,
+          isAvailable,
+
+          image: imageURLs[0], // send a single image URL
         },
         {
           headers: {
             Authorization: "Bearer " + token,
           },
-        },
+        }
       );
 
       toast.success("Product added successfully");
       navigate("/admin/products");
     } catch (err) {
-      toast.error(err?.response?.data?.message || "Failed to add product");
-      return;
-    }
+
+    console.log(err.response);
+
+    console.log(err.response?.data);
+
+    toast.error(
+        err.response?.data?.message ||
+        "Failed to add product"
+    );
+
+}
   }
 
   return (

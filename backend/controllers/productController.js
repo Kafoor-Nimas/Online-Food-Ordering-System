@@ -2,6 +2,7 @@ import ProductModel from "../models/ProductModel.js";
 import { isAdmin } from "./authController.js";
 
 export async function createProduct(req, res) {
+  console.log(req.body);
 
   if (!isAdmin(req)) {
     res.status(403).json({ message: "Access denied. Admins only" });
@@ -27,9 +28,14 @@ export async function createProduct(req, res) {
       .status(201)
       .json({ message: "Product created successfully", product: newProduct });
   } catch (error) {
-    res.status(500).json({ message: "Error creating product", error });
-  }
-}
+  console.error("===== CREATE PRODUCT ERROR =====");
+  console.error(error);
+  console.error(error.message);
+
+  res.status(500).json({
+    message: error.message,
+  });
+}}
 
 export async function getProducts(req, res) {
   if (!isAdmin(req)) {
