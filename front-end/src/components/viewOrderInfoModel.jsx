@@ -3,7 +3,6 @@ import { CgClose } from "react-icons/cg";
 import toast from "react-hot-toast";
 import axios from "axios";
 import getFormattedPrice from "../../utils/price-format";
-import getFormattedDate from "../../utils/format-date";
 
 const statusStyles = {
   Placed: "bg-yellow-100 text-yellow-700",
@@ -16,38 +15,24 @@ const statusStyles = {
 
 export default function ViewOrderInfoModel({ order }) {
   const [isVisible, setIsVisible] = useState(false);
+  const [status, setStatus] = useState(order?.status || "Placed");
+  const [notes, setNotes] = useState(order?.notes || "");
+  const [saving, setSaving] = useState(false);
 
   if (!order) return null;
-
-  const [status, setStatus] = useState(order.status || "Pending");
-  const [notes, setNotes] = useState(order.notes || "");
-  const [saving, setSaving] = useState(false);
 
   async function handleChange() {
     try {
       setSaving(true);
-
       const token = localStorage.getItem("auth_token");
-
       await axios.put(
         import.meta.env.VITE_BASE_URL + "/orders/" + order.orderId,
-        {
-          status,
-          notes,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
+        { status, notes },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
-
       toast.success("Order updated successfully");
-
       window.location.reload();
     } catch (error) {
-      console.error(error);
-
       toast.error(error?.response?.data?.message || "Failed to update order");
     } finally {
       setSaving(false);
@@ -57,11 +42,8 @@ export default function ViewOrderInfoModel({ order }) {
   return (
     <>
       <button
-        className="bg-app-orange text-white text-sm font-semibold px-4 py-1.5 rounded-lg hover:bg-app-orange-dark transition-colors shadow-sm shadow-app-orange/20"
-        onClick={() => {
-          console.log("View clicked", order);
-          setIsVisible(true);
-        }}
+        className="bg-app-orange text-white text-sm font-semibold px-4 py-1.5 rounded-lg hover:bg-app-orange-dark transition-colors shadow-sm"
+        onClick={() => setIsVisible(true)}
       >
         View Details
       </button>
@@ -77,29 +59,24 @@ export default function ViewOrderInfoModel({ order }) {
             </button>
 
             {/* Header */}
-
             <div className="shrink-0 bg-app-green px-6 py-6">
               <div className="flex justify-between items-center">
-                <h2 className="text-xl text-white font-semibold">
-                  {order.orderId}
-                </h2>
-
+                <h2 className="text-xl text-white font-semibold">{order.orderId}</h2>
                 <span className="text-app-cream/60 text-sm mr-10">
-                  {order.createdAt
-                    ? new Date(order.createdAt).toLocaleDateString()
-                    : "-"}
+                  {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : "-"}
                 </span>
               </div>
 
               <div className="flex justify-between mt-2 flex-wrap gap-2">
                 <div>
+                  {/* ← use userId.name from populated field */}
                   <h3 className="text-app-cream/90 font-medium">
-                    {order.firstName} {order.lastName}
+                    {order.userId?.name || order.email || "-"}
                   </h3>
-
                   <p className="text-app-cream/60 text-sm">{order.email}</p>
+                  <p className="text-app-cream/60 text-sm">{order.phone}</p>
+                  <p className="text-app-cream/60 text-sm">{order.shippingAddress}</p>
                 </div>
-
                 <h3 className="text-white font-bold text-lg">
                   {getFormattedPrice(order.total || 0)}
                 </h3>
@@ -108,12 +85,9 @@ export default function ViewOrderInfoModel({ order }) {
               <div className="w-full h-px bg-white/10 my-4"></div>
 
               <div className="flex justify-between items-center flex-wrap gap-3">
-                <span
-                  className={`px-2.5 py-1 rounded-full text-xs font-semibold ${statusStyles[status]}`}
-                >
+                <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${statusStyles[status] || "bg-gray-100 text-gray-700"}`}>
                   {status}
                 </span>
-
                 <select
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
@@ -129,52 +103,36 @@ export default function ViewOrderInfoModel({ order }) {
               </div>
 
               <div className="mt-4">
-                <label className="text-xs font-semibold tracking-wide text-app-cream/60 uppercase mb-1.5 block">
-                  Notes
-                </label>
-
+                <label className="text-xs font-semibold tracking-wide text-app-cream/60 uppercase mb-1.5 block">Notes</label>
                 <textarea
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  className="w-full text-sm rounded-lg p-2.5 bg-white/10 border border-white/15 text-white placeholder:text-white/40 resize-none focus:outline-none focus:ring-2 focus:ring-app-orange/50 focus:border-transparent"
-                  rows={3}
+                  className="w-full text-sm rounded-lg p-2.5 bg-white/10 border border-white/15 text-white placeholder:text-white/40 resize-none focus:outline-none"
+                  rows={2}
                   placeholder="Add notes..."
                 />
               </div>
             </div>
 
             {/* Items */}
-
             <div className="flex-1 overflow-y-auto p-6">
-              <p className="text-xs font-semibold tracking-wide text-app-text-light uppercase mb-3">
-                Order Items
-              </p>
-
+              <p className="text-xs font-semibold tracking-wide text-app-text-light uppercase mb-3">Order Items</p>
               {Array.isArray(order.items) && order.items.length > 0 ? (
                 <div className="flex flex-col gap-2">
                   {order.items.map((item, index) => (
-                    <div
-                      key={index}
-                      className="w-full flex justify-between items-center border border-app-border bg-app-cream/40 hover:bg-app-cream transition-colors rounded-xl p-2.5"
-                    >
+                    <div key={index} className="w-full flex justify-between items-center border border-app-border bg-app-cream/40 rounded-xl p-2.5">
                       <div className="flex items-center gap-3">
                         <img
-                          src={item.image}
+                          src={item.image || item.images?.[0]}
                           alt={item.name}
                           className="w-12 h-12 rounded-lg object-cover border border-app-border"
+                          onError={(e) => e.target.style.display = 'none'}
                         />
-
                         <div className="flex flex-col">
-                          <span className="text-sm font-semibold text-app-green">
-                            {item.name}
-                          </span>
-
-                          <span className="text-xs text-app-text-light">
-                            Qty: {item.qty}
-                          </span>
+                          <span className="text-sm font-semibold text-app-green">{item.name}</span>
+                          <span className="text-xs text-app-text-light">Qty: {item.quantity || item.qty}</span>
                         </div>
                       </div>
-
                       <span className="text-sm font-semibold text-app-green">
                         {getFormattedPrice(item.price)}
                       </span>
@@ -182,9 +140,7 @@ export default function ViewOrderInfoModel({ order }) {
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-10 text-app-text-light text-sm">
-                  No items found.
-                </div>
+                <div className="text-center py-10 text-app-text-light text-sm">No items found.</div>
               )}
             </div>
 
@@ -193,7 +149,7 @@ export default function ViewOrderInfoModel({ order }) {
                 <button
                   onClick={handleChange}
                   disabled={saving}
-                  className="bg-app-orange hover:bg-app-orange-dark text-white font-semibold px-6 py-2.5 rounded-xl shadow-md shadow-app-orange/20 disabled:opacity-60 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                  className="bg-app-orange hover:bg-app-orange-dark text-white font-semibold px-6 py-2.5 rounded-xl disabled:opacity-60 cursor-pointer transition-colors"
                 >
                   {saving ? "Saving..." : "Save Changes"}
                 </button>

@@ -2,6 +2,7 @@ import ProductModel from "../models/ProductModel.js";
 import { isAdmin } from "./authController.js";
 
 export async function createProduct(req, res) {
+
   if (!isAdmin(req)) {
     res.status(403).json({ message: "Access denied. Admins only" });
     return;
@@ -19,6 +20,10 @@ export async function createProduct(req, res) {
     data.originalPrice = req.body.originalPrice || req.body.price;
     data.image = req.body.image || "/images/default-product.png";
     data.category = req.body.category || "Others";
+
+    data.rating = Number(req.body.rating) || 0;
+    data.reviewCount = Number(req.body.reviewCount) || 0;
+
     data.isAvailable = req.body.isAvailable === false ? false : true;
     data.unit = req.body.unit || "piece";
     data.rating = req.body.rating || 0;
@@ -29,9 +34,14 @@ export async function createProduct(req, res) {
       .status(201)
       .json({ message: "Product created successfully", product: newProduct });
   } catch (error) {
-    res.status(500).json({ message: "Error creating product", error });
-  }
-}
+  console.error("===== CREATE PRODUCT ERROR =====");
+  console.error(error);
+  console.error(error.message);
+
+  res.status(500).json({
+    message: error.message,
+  });
+}}
 
 export async function getProducts(req, res) {
   if (!isAdmin(req)) {
@@ -118,6 +128,10 @@ export async function updateProduct(req, res) {
     data.originalPrice = req.body.originalPrice || req.body.price;
     data.category = req.body.category || "Others";
     data.image = req.body.image || "/images/default-product.png";
+
+    data.rating = Number(req.body.rating) || 0;
+    data.reviewCount = Number(req.body.reviewCount) || 0;
+
     data.isAvailable = req.body.isAvailable === false ? false : true;
     await ProductModel.updateOne({ productId: req.params.productId }, data);
     res.status(200).json({ message: "Product updated successfully" });

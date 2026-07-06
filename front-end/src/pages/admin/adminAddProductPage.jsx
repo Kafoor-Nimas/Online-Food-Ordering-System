@@ -39,31 +39,40 @@ export default function AdminAddProductPage() {
       await axios.post(
         import.meta.env.VITE_BASE_URL + "/products",
         {
-          productId: productId,
-          name: name,
-          description: description,
-          price: price,
-          originalPrice: originalPrice,
-          category: category,
-          unit: unit,
-          rating: rating,
-          reviewCount: reviewCount,
-          isAvailable: isAvailable,
-          images: imageURLs,
+          productId,
+          name,
+          description,
+          price,
+          originalPrice,
+          category,
+          unit,
+          rating,
+          reviewCount,
+          isAvailable,
+
+          image: imageURLs[0], // send a single image URL
         },
         {
           headers: {
             Authorization: "Bearer " + token,
           },
-        },
+        }
       );
 
       toast.success("Product added successfully");
       navigate("/admin/products");
     } catch (err) {
-      toast.error(err?.response?.data?.message || "Failed to add product");
-      return;
-    }
+
+    console.log(err.response);
+
+    console.log(err.response?.data);
+
+    toast.error(
+        err.response?.data?.message ||
+        "Failed to add product"
+    );
+
+}
   }
 
   return (
@@ -99,7 +108,7 @@ export default function AdminAddProductPage() {
                 setName(e.target.value);
               }}
               type="text"
-              placeholder="Ex: Chicken Sandwich"
+              placeholder="Ex: Laptop"
               className="border border-app-border rounded-lg h-11 sm:h-12 px-3.5 text-sm sm:text-base text-app-text bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"
             />
           </div>
@@ -113,7 +122,7 @@ export default function AdminAddProductPage() {
               onChange={(e) => {
                 setDescription(e.target.value);
               }}
-              placeholder="Ex: Food provides essential nutrients for overall health and well-being"
+              placeholder="Ex: Laptop"
               rows={4}
               className="border border-app-border rounded-lg p-3.5 text-sm sm:text-base text-app-text bg-white resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"
             />
@@ -129,7 +138,7 @@ export default function AdminAddProductPage() {
                 setPrice(e.target.value);
               }}
               type="text"
-              placeholder="Ex: 5000"
+              placeholder="Ex: 2500"
               className="border border-app-border rounded-lg h-11 sm:h-12 px-3.5 text-sm sm:text-base text-app-text bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"
             />
           </div>
@@ -144,7 +153,7 @@ export default function AdminAddProductPage() {
                 setOriginalPrice(e.target.value);
               }}
               type="text"
-              placeholder="Ex: 5000"
+              placeholder="Ex: 2800"
               className="border border-app-border rounded-lg h-11 sm:h-12 px-3.5 text-sm sm:text-base text-app-text bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"
             />
           </div>
