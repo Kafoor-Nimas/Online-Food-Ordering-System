@@ -17,7 +17,9 @@ const Cart = () => {
       <div className="min-h-screen bg-app-cream pt-28 pb-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl border border-app-border p-8 text-center shadow-sm">
-            <h1 className="text-2xl font-semibold text-app-text mb-3">Your cart is empty</h1>
+            <h1 className="text-2xl font-semibold text-app-text mb-3">
+              Your cart is empty
+            </h1>
             <p className="text-sm text-app-text-light mb-6">
               Add your favorite items to the cart and continue to checkout.
             </p>
@@ -37,7 +39,9 @@ const Cart = () => {
     <div className="min-h-screen bg-app-cream pt-28 pb-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-semibold text-app-text">Shopping Cart</h1>
+          <h1 className="text-3xl font-semibold text-app-text">
+            Shopping Cart
+          </h1>
           <p className="text-sm text-app-text-light mt-2">
             {cartQuantity} item{cartQuantity > 1 ? "s" : ""} in your cart.
           </p>
@@ -51,7 +55,7 @@ const Cart = () => {
                 className="bg-white rounded-3xl border border-app-border p-5 shadow-sm flex flex-col md:flex-row gap-4 items-start"
               >
                 <img
-                  src={item.images}
+                  src={item.image}
                   alt={item.name}
                   className="h-32 w-full md:w-32 rounded-3xl object-cover"
                 />
@@ -66,7 +70,9 @@ const Cart = () => {
                   <div className="flex flex-wrap gap-3 items-center">
                     <div className="flex items-center gap-2 rounded-full border border-app-border bg-app-cream px-3 py-2">
                       <button
-                        onClick={() => updateItemQuantity(item.id, item.quantity - 1)}
+                        onClick={() =>
+                          updateItemQuantity(item.id, item.quantity - 1)
+                        }
                         className="w-8 h-8 rounded-full bg-white border border-app-border text-app-text font-semibold hover:bg-app-cream transition"
                       >
                         -
@@ -75,7 +81,9 @@ const Cart = () => {
                         {item.quantity}
                       </span>
                       <button
-                        onClick={() => updateItemQuantity(item.id, item.quantity + 1)}
+                        onClick={() =>
+                          updateItemQuantity(item.id, item.quantity + 1)
+                        }
                         className="w-8 h-8 rounded-full bg-white border border-app-border text-app-text font-semibold hover:bg-app-cream transition"
                       >
                         +
@@ -100,7 +108,9 @@ const Cart = () => {
           </div>
 
           <aside className="bg-white rounded-3xl border border-app-border p-6 shadow-sm">
-            <h2 className="text-xl font-semibold text-app-text mb-4">Order summary</h2>
+            <h2 className="text-xl font-semibold text-app-text mb-4">
+              Order summary
+            </h2>
             <div className="space-y-3 text-sm text-app-text-light">
               <div className="flex items-center justify-between">
                 <span>Subtotal</span>

@@ -58,7 +58,7 @@ const Checkout = () => {
       quantity: item.quantity,
       name: item.name,
       price: item.price,
-      images: item.images,
+      image: item.image,
     }));
 
     const payload = {
@@ -85,7 +85,8 @@ const Checkout = () => {
       navigate("/my-orders");
     } catch (error) {
       toast.error(
-        error?.response?.data?.message || "Unable to place order. Please try again.",
+        error?.response?.data?.message ||
+          "Unable to place order. Please try again.",
       );
     } finally {
       setSubmitting(false);
@@ -97,9 +98,12 @@ const Checkout = () => {
       <div className="min-h-screen bg-app-cream pt-28 pb-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl border border-app-border p-8 text-center shadow-sm">
-            <h1 className="text-2xl font-semibold text-app-text mb-3">No items to checkout</h1>
+            <h1 className="text-2xl font-semibold text-app-text mb-3">
+              No items to checkout
+            </h1>
             <p className="text-sm text-app-text-light mb-6">
-              Add items to the cart first, then return here to complete your purchase.
+              Add items to the cart first, then return here to complete your
+              purchase.
             </p>
             <button
               onClick={() => navigate("/menu")}
@@ -125,11 +129,15 @@ const Checkout = () => {
 
         <div className="grid gap-8 xl:grid-cols-[1.35fr_0.85fr]">
           <div className="bg-white rounded-3xl border border-app-border p-8 shadow-sm">
-            <h2 className="text-xl font-semibold text-app-text mb-5">Shipping details</h2>
+            <h2 className="text-xl font-semibold text-app-text mb-5">
+              Shipping details
+            </h2>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block">
-                  <span className="text-sm font-medium text-app-text">Full name</span>
+                  <span className="text-sm font-medium text-app-text">
+                    Full name
+                  </span>
                   <input
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
@@ -139,7 +147,9 @@ const Checkout = () => {
                   />
                 </label>
                 <label className="block">
-                  <span className="text-sm font-medium text-app-text">Email address</span>
+                  <span className="text-sm font-medium text-app-text">
+                    Email address
+                  </span>
                   <input
                     value={email}
                     readOnly
@@ -150,7 +160,9 @@ const Checkout = () => {
               </div>
 
               <label className="block">
-                <span className="text-sm font-medium text-app-text">Phone number</span>
+                <span className="text-sm font-medium text-app-text">
+                  Phone number
+                </span>
                 <input
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
@@ -161,7 +173,9 @@ const Checkout = () => {
               </label>
 
               <label className="block">
-                <span className="text-sm font-medium text-app-text">Shipping address</span>
+                <span className="text-sm font-medium text-app-text">
+                  Shipping address
+                </span>
                 <textarea
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
@@ -173,7 +187,9 @@ const Checkout = () => {
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block">
-                  <span className="text-sm font-medium text-app-text">Payment method</span>
+                  <span className="text-sm font-medium text-app-text">
+                    Payment method
+                  </span>
                   <select
                     value={paymentMethod}
                     onChange={(e) => setPaymentMethod(e.target.value)}
@@ -192,7 +208,9 @@ const Checkout = () => {
                     onChange={(e) => setSaveInfo(e.target.checked)}
                     className="h-4 w-4 rounded border-app-border text-app-orange focus:ring-app-orange"
                   />
-                  <span className="text-sm text-app-text">Save address for future orders</span>
+                  <span className="text-sm text-app-text">
+                    Save address for future orders
+                  </span>
                 </label>
               </div>
 
@@ -207,12 +225,14 @@ const Checkout = () => {
           </div>
 
           <aside className="bg-white rounded-3xl border border-app-border p-8 shadow-sm">
-            <h2 className="text-xl font-semibold text-app-text mb-5">Order summary</h2>
+            <h2 className="text-xl font-semibold text-app-text mb-5">
+              Order summary
+            </h2>
             <div className="space-y-4">
               {cartItems.map((item) => (
                 <div key={item.id} className="flex items-center gap-3">
                   <img
-                    src={item.images}
+                    src={item.image}
                     alt={item.name}
                     className="h-20 w-20 rounded-3xl object-cover"
                   />

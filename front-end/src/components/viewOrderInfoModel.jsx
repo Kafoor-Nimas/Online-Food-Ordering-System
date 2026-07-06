@@ -28,7 +28,7 @@ export default function ViewOrderInfoModel({ order }) {
       await axios.put(
         import.meta.env.VITE_BASE_URL + "/orders/" + order.orderId,
         { status, notes },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
       toast.success("Order updated successfully");
       window.location.reload();
@@ -61,9 +61,13 @@ export default function ViewOrderInfoModel({ order }) {
             {/* Header */}
             <div className="shrink-0 bg-app-green px-6 py-6">
               <div className="flex justify-between items-center">
-                <h2 className="text-xl text-white font-semibold">{order.orderId}</h2>
+                <h2 className="text-xl text-white font-semibold">
+                  {order.orderId}
+                </h2>
                 <span className="text-app-cream/60 text-sm mr-10">
-                  {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : "-"}
+                  {order.createdAt
+                    ? new Date(order.createdAt).toLocaleDateString()
+                    : "-"}
                 </span>
               </div>
 
@@ -75,7 +79,9 @@ export default function ViewOrderInfoModel({ order }) {
                   </h3>
                   <p className="text-app-cream/60 text-sm">{order.email}</p>
                   <p className="text-app-cream/60 text-sm">{order.phone}</p>
-                  <p className="text-app-cream/60 text-sm">{order.shippingAddress}</p>
+                  <p className="text-app-cream/60 text-sm">
+                    {order.shippingAddress}
+                  </p>
                 </div>
                 <h3 className="text-white font-bold text-lg">
                   {getFormattedPrice(order.total || 0)}
@@ -85,7 +91,9 @@ export default function ViewOrderInfoModel({ order }) {
               <div className="w-full h-px bg-white/10 my-4"></div>
 
               <div className="flex justify-between items-center flex-wrap gap-3">
-                <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${statusStyles[status] || "bg-gray-100 text-gray-700"}`}>
+                <span
+                  className={`px-2.5 py-1 rounded-full text-xs font-semibold ${statusStyles[status] || "bg-gray-100 text-gray-700"}`}
+                >
                   {status}
                 </span>
                 <select
@@ -103,7 +111,9 @@ export default function ViewOrderInfoModel({ order }) {
               </div>
 
               <div className="mt-4">
-                <label className="text-xs font-semibold tracking-wide text-app-cream/60 uppercase mb-1.5 block">Notes</label>
+                <label className="text-xs font-semibold tracking-wide text-app-cream/60 uppercase mb-1.5 block">
+                  Notes
+                </label>
                 <textarea
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
@@ -116,21 +126,30 @@ export default function ViewOrderInfoModel({ order }) {
 
             {/* Items */}
             <div className="flex-1 overflow-y-auto p-6">
-              <p className="text-xs font-semibold tracking-wide text-app-text-light uppercase mb-3">Order Items</p>
+              <p className="text-xs font-semibold tracking-wide text-app-text-light uppercase mb-3">
+                Order Items
+              </p>
               {Array.isArray(order.items) && order.items.length > 0 ? (
                 <div className="flex flex-col gap-2">
                   {order.items.map((item, index) => (
-                    <div key={index} className="w-full flex justify-between items-center border border-app-border bg-app-cream/40 rounded-xl p-2.5">
+                    <div
+                      key={index}
+                      className="w-full flex justify-between items-center border border-app-border bg-app-cream/40 rounded-xl p-2.5"
+                    >
                       <div className="flex items-center gap-3">
                         <img
                           src={item.image || item.images?.[0]}
                           alt={item.name}
                           className="w-12 h-12 rounded-lg object-cover border border-app-border"
-                          onError={(e) => e.target.style.display = 'none'}
+                          onError={(e) => (e.target.style.display = "none")}
                         />
                         <div className="flex flex-col">
-                          <span className="text-sm font-semibold text-app-green">{item.name}</span>
-                          <span className="text-xs text-app-text-light">Qty: {item.quantity || item.qty}</span>
+                          <span className="text-sm font-semibold text-app-green">
+                            {item.name}
+                          </span>
+                          <span className="text-xs text-app-text-light">
+                            Qty: {item.quantity || item.qty}
+                          </span>
                         </div>
                       </div>
                       <span className="text-sm font-semibold text-app-green">
@@ -140,7 +159,9 @@ export default function ViewOrderInfoModel({ order }) {
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-10 text-app-text-light text-sm">No items found.</div>
+                <div className="text-center py-10 text-app-text-light text-sm">
+                  No items found.
+                </div>
               )}
             </div>
 

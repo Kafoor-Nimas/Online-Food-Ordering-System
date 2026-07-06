@@ -7,7 +7,6 @@ import { FaPlus } from "react-icons/fa";
 import DeleteModel from "../../components/deleteModel";
 import getFormattedPrice from "../../../utils/price-format";
 
-
 export default function AdminProductPage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -198,10 +197,9 @@ export default function AdminProductPage() {
                 {/* Table Body */}
                 <tbody className="text-app-text divide-y divide-app-border">
                   {products.map((item, index) => {
-
                     console.log("Product:", item);
                     console.log("Image URL:", item.image);
-                    
+
                     return (
                       <tr
                         key={index}
@@ -217,11 +215,7 @@ export default function AdminProductPage() {
                           {item.description}
                         </td>
                         <td className="px-5 py-4 font-semibold text-app-green whitespace-nowrap">
-
                           Rs.{item.price}
-
-                          {getFormattedPrice(item.price)}
-
                         </td>
                         <td className="px-5 py-4 whitespace-nowrap">
                           <span className="inline-block px-2.5 py-1 text-xs font-medium rounded-full bg-app-green-lighter/10 text-app-green-light">
