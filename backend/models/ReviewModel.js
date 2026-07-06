@@ -12,7 +12,7 @@ const reviewSchema = new mongoose.Schema(
     product: {
       // type: mongoose.Schema.Types.ObjectId,
       type: String, // ← change from ObjectId to String
-      ref: "Product",
+      ref: "product",
       required: true,
     },
     rating: {

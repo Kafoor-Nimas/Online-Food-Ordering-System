@@ -73,6 +73,6 @@ export const getProductReviews = async (req, res) => {
     console.log("❌ getProductReviews Error:", error.message); 
     
     // ← return empty array instead of 500 error
-    res.status(200).json([]);
+    res.status(500).json({ message: "Error fetching reviews", error: error.message });
   }
 };
