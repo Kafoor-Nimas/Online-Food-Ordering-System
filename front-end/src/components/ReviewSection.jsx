@@ -48,16 +48,24 @@ export default function ReviewSection({ productId }) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ productId, rating, comment }),
+        body: JSON.stringify({ product: productId, rating, comment }),
       });
 
       if (response.ok) {
+        // Backend
+        const savedData = await response.json();
+        console.log("✅ Saved Review in DB:", savedData);
+
         toast.success("Review added successfully!");
         setComment("");
         setRating(5);
       
-        const updatedRes = await fetch(`${baseUrl}/reviews/${productId}`);
+        // get new reviews
+        const updatedRes = await fetch(`${baseUrl}/reviews/${productId}`, {
+        cache: 'no-store'});
         const updatedData = await updatedRes.json();
+        console.log("📥 Fetched Data from DB:", updatedData);
+        
         setReviews(updatedData);
       } else {
         toast.error("Failed to add review.");

@@ -1,4 +1,5 @@
 import Review from "../models/ReviewModel.js";
+import user from "../models/userModel.js";
 
 // export const addReview = async (req, res) => {
 //     try {
@@ -68,6 +69,9 @@ export const getProductReviews = async (req, res) => {
     );
     res.status(200).json(reviews);
   } catch (error) {
+    // error show in terminal for debugging
+    console.log("❌ getProductReviews Error:", error.message); 
+    
     // ← return empty array instead of 500 error
     res.status(200).json([]);
   }
