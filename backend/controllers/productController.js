@@ -2,7 +2,7 @@ import ProductModel from "../models/ProductModel.js";
 import { isAdmin } from "./authController.js";
 
 export async function createProduct(req, res) {
-  
+
     console.log("========== REQUEST BODY ==========");
     console.log(req.body);
     console.log("Image received:", req.body.image);
@@ -24,6 +24,10 @@ export async function createProduct(req, res) {
     data.originalPrice = req.body.originalPrice || req.body.price;
     data.image = req.body.image || "/images/default-product.png";
     data.category = req.body.category || "Others";
+
+    data.rating = Number(req.body.rating) || 0;
+    data.reviewCount = Number(req.body.reviewCount) || 0;
+
     data.isAvailable = req.body.isAvailable === false ? false : true;
     const newProduct = new ProductModel(data);
     await newProduct.save();
@@ -125,6 +129,10 @@ export async function updateProduct(req, res) {
     data.originalPrice = req.body.originalPrice || req.body.price;
     data.category = req.body.category || "Others";
     data.image = req.body.image || "/images/default-product.png";
+
+    data.rating = Number(req.body.rating) || 0;
+    data.reviewCount = Number(req.body.reviewCount) || 0;
+
     data.isAvailable = req.body.isAvailable === false ? false : true;
     await ProductModel.updateOne({ productId: req.params.productId }, data);
     res.status(200).json({ message: "Product updated successfully" });
