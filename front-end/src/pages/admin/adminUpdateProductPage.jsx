@@ -38,10 +38,12 @@ export default function AdminUpdateProductPage() {
         fileUploadPromises[i] = uploadFile(files[i]);
       }
 
-      let imageURLs = await Promise.all(fileUploadPromises);
+      // use single image string
+      let imageURL = location.state.image;
 
-      if (imageURLs.length == 0) {
-        imageURLs = location.state.images;
+      if (files.length > 0) {
+        const uploaded = await Promise.all(fileUploadPromises);
+        imageURL = uploaded[0];
       }
 
       await axios.put(
@@ -51,7 +53,7 @@ export default function AdminUpdateProductPage() {
           description: description,
           price: price,
           originalPrice: originalPrice,
-          images: imageURLs,
+          image: imageURL,
           category: category,
           unit: unit,
           rating: rating,

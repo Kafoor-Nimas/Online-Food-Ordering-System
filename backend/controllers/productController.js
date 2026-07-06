@@ -2,7 +2,6 @@ import ProductModel from "../models/ProductModel.js";
 import { isAdmin } from "./authController.js";
 
 export async function createProduct(req, res) {
-
   if (!isAdmin(req)) {
     res.status(403).json({ message: "Access denied. Admins only" });
     return;
@@ -28,20 +27,22 @@ export async function createProduct(req, res) {
     data.unit = req.body.unit || "piece";
     data.rating = req.body.rating || 0;
     data.reviewCount = req.body.reviewCount || 0;
+    data.unit = req.body.unit || "piece";
     const newProduct = new ProductModel(data);
     await newProduct.save();
     res
       .status(201)
       .json({ message: "Product created successfully", product: newProduct });
   } catch (error) {
-  console.error("===== CREATE PRODUCT ERROR =====");
-  console.error(error);
-  console.error(error.message);
+    console.error("===== CREATE PRODUCT ERROR =====");
+    console.error(error);
+    console.error(error.message);
 
-  res.status(500).json({
-    message: error.message,
-  });
-}}
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+}
 
 export async function getProducts(req, res) {
   if (!isAdmin(req)) {
@@ -128,6 +129,7 @@ export async function updateProduct(req, res) {
     data.originalPrice = req.body.originalPrice || req.body.price;
     data.category = req.body.category || "Others";
     data.image = req.body.image || "/images/default-product.png";
+    data.unit = req.body.unit || "piece";
 
     data.rating = Number(req.body.rating) || 0;
     data.reviewCount = Number(req.body.reviewCount) || 0;
