@@ -18,7 +18,8 @@ export default function AdminUpdateProductPage() {
   const [rating, setRating] = useState(location.state.rating);
   const [reviewCount, setReviewCount] = useState(location.state.reviewCount);
   const [isAvailable, setIsAvailable] = useState(location.state.isAvailable);
-  const [files, setFiles] = useState(location.state.files);
+  // const [files, setFiles] = useState(location.state.files);
+  const [files, setFiles] = useState([]);
   const navigate = useNavigate();
 
   async function handleUpdateProduct() {

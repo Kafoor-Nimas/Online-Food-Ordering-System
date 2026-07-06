@@ -223,7 +223,7 @@ export default function AdminOrdersPage() {
                         {order.orderId || order._id}
                       </td>
                       <td className="px-5 py-4 whitespace-nowrap">
-                        {(order.firstName || "") + " " + (order.lastName || "")}
+                        {order.userId?.name || "-"}
                       </td>
                       <td className="px-5 py-4 whitespace-nowrap text-gray-600">
                         {order.email || "-"}

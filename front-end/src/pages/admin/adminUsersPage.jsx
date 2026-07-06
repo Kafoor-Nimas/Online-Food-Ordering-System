@@ -205,7 +205,10 @@ export default function AdminUsersPage() {
                       <td className="px-5 py-3 text-center">
                         <img
                           referrerPolicy="no-referrer"
-                          src={user.image}
+                          src={
+                            user.avatar ||
+                            "https://ui-avatars.com/api/?name=" + user.name
+                          }
                           className="w-11 h-11 object-cover rounded-full mx-auto border-2 border-app-border"
                         />
                       </td>
@@ -257,7 +260,7 @@ export default function AdminUsersPage() {
                           onClick={() => {
                             axios
                               .post(
-                                import.meta.env.BASE_API_URL +
+                                import.meta.env.VITE_BASE_URL +
                                   "/users/toggle-block",
                                 {
                                   email: user.email,
@@ -265,7 +268,8 @@ export default function AdminUsersPage() {
                                 {
                                   headers: {
                                     Authorization:
-                                      "Bearer " + localStorage.getItem("token"),
+                                      "Bearer " +
+                                      localStorage.getItem("auth_token"),
                                   },
                                 },
                               )
@@ -296,7 +300,7 @@ export default function AdminUsersPage() {
                           onClick={() => {
                             axios
                               .post(
-                                import.meta.env.BASE_API_URL +
+                                import.meta.env.VITE_BASE_URL +
                                   "/users/toggle-role",
                                 {
                                   email: user.email,
@@ -304,7 +308,8 @@ export default function AdminUsersPage() {
                                 {
                                   headers: {
                                     Authorization:
-                                      "Bearer " + localStorage.getItem("token"),
+                                      "Bearer " +
+                                      localStorage.getItem("auth_token"),
                                   },
                                 },
                               )
