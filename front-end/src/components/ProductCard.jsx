@@ -54,13 +54,13 @@ const ProductCard = ({ product }) => {
           <div className="flex items-center gap-1 truncate">
             <span className="text-base font-medium">
               {currency}
-              {product.price.toFixed(1)}
+              {product.price.toFixed(0)}
             </span>
             <span className="text-xs text-app-text-light">/{product.unit}</span>
             {product.originalPrice > product.price && (
               <span className="text-xs text-app-text-light line-through ml-1.5">
                 {currency}
-                {product.originalPrice.toFixed(1)}
+                {product.originalPrice.toFixed(0)}
               </span>
             )}
           </div>
