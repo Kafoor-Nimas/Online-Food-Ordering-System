@@ -3,10 +3,6 @@ import { isAdmin } from "./authController.js";
 
 export async function createProduct(req, res) {
 
-    console.log("========== REQUEST BODY ==========");
-    console.log(req.body);
-    console.log("Image received:", req.body.image);
-
   if (!isAdmin(req)) {
     res.status(403).json({ message: "Access denied. Admins only" });
     return;
@@ -29,6 +25,9 @@ export async function createProduct(req, res) {
     data.reviewCount = Number(req.body.reviewCount) || 0;
 
     data.isAvailable = req.body.isAvailable === false ? false : true;
+    data.unit = req.body.unit || "piece";
+    data.rating = req.body.rating || 0;
+    data.reviewCount = req.body.reviewCount || 0;
     const newProduct = new ProductModel(data);
     await newProduct.save();
     res
