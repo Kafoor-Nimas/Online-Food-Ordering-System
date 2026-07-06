@@ -99,7 +99,7 @@ export default function AdminAddProductPage() {
                 setName(e.target.value);
               }}
               type="text"
-              placeholder="Ex: Laptop"
+              placeholder="Ex: Chicken Sandwich"
               className="border border-app-border rounded-lg h-11 sm:h-12 px-3.5 text-sm sm:text-base text-app-text bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"
             />
           </div>
@@ -113,7 +113,7 @@ export default function AdminAddProductPage() {
               onChange={(e) => {
                 setDescription(e.target.value);
               }}
-              placeholder="Ex: Laptop"
+              placeholder="Ex: Food provides essential nutrients for overall health and well-being"
               rows={4}
               className="border border-app-border rounded-lg p-3.5 text-sm sm:text-base text-app-text bg-white resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"
             />
