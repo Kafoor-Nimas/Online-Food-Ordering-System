@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, NavLink, Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import {
   FiMenu,
@@ -18,7 +19,30 @@ import AdminUpdateProductPage from "./admin/adminUpdateProductPage";
 
 export default function AdminPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [stats, setStats] = useState({ products: 0, orders: 0, users: 0 });
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("auth_token");
+    const headers = { Authorization: "Bearer " + token };
+    const base = import.meta.env.VITE_BASE_URL;
+
+    Promise.all([
+      axios.get(`${base}/products/all`, { headers }),
+      axios.get(`${base}/orders/10/1`, { headers }),
+      axios.get(`${base}/users/all/10/1`, { headers }),
+    ])
+      .then(([productsRes, ordersRes, usersRes]) => {
+        setStats({
+          products: Array.isArray(productsRes.data)
+            ? productsRes.data.length
+            : 0,
+          orders: ordersRes.data?.orders?.length || 0,
+          users: usersRes.data?.users?.length || 0,
+        });
+      })
+      .catch((err) => console.error("Dashboard stats error:", err));
+  }, []);
 
   const menu = [
     {
@@ -39,8 +63,8 @@ export default function AdminPage() {
   ];
 
   function logout() {
-    localStorage.removeItem("token");
-    navigate("/login", { replace: true });
+    localStorage.removeItem("auth_token");
+    navigate("/", { replace: true });
   }
 
   return (
@@ -147,7 +171,9 @@ export default function AdminPage() {
                       <div>
                         <p className="text-gray-500">Products</p>
 
-                        <h2 className="text-4xl font-bold mt-2">0</h2>
+                        <h2 className="text-4xl font-bold mt-2">
+                          {stats.products}
+                        </h2>
                       </div>
 
                       <div className="bg-orange-100 p-4 rounded-full">
@@ -163,7 +189,9 @@ export default function AdminPage() {
                       <div>
                         <p className="text-gray-500">Orders</p>
 
-                        <h2 className="text-4xl font-bold mt-2">0</h2>
+                        <h2 className="text-4xl font-bold mt-2">
+                          {stats.orders}
+                        </h2>
                       </div>
 
                       <div className="bg-orange-100 p-4 rounded-full">
@@ -179,7 +207,9 @@ export default function AdminPage() {
                       <div>
                         <p className="text-gray-500">Users</p>
 
-                        <h2 className="text-4xl font-bold mt-2">0</h2>
+                        <h2 className="text-4xl font-bold mt-2">
+                          {stats.users}
+                        </h2>
                       </div>
 
                       <div className="bg-orange-100 p-4 rounded-full">

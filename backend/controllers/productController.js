@@ -2,7 +2,6 @@ import ProductModel from "../models/ProductModel.js";
 import { isAdmin } from "./authController.js";
 
 export async function createProduct(req, res) {
-
   if (!isAdmin(req)) {
     res.status(403).json({ message: "Access denied. Admins only" });
     return;
@@ -21,6 +20,9 @@ export async function createProduct(req, res) {
     data.image = req.body.image || "/images/default-product.png";
     data.category = req.body.category || "Others";
     data.isAvailable = req.body.isAvailable === false ? false : true;
+    data.unit = req.body.unit || "piece";
+    data.rating = req.body.rating || 0;
+    data.reviewCount = req.body.reviewCount || 0;
     const newProduct = new ProductModel(data);
     await newProduct.save();
     res
