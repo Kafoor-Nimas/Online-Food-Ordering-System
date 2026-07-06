@@ -198,6 +198,10 @@ export default function AdminProductPage() {
                 {/* Table Body */}
                 <tbody className="text-app-text divide-y divide-app-border">
                   {products.map((item, index) => {
+
+                    console.log("Product:", item);
+                    console.log("Image URL:", item.image);
+                    
                     return (
                       <tr
                         key={index}

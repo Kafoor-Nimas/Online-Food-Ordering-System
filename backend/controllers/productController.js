@@ -2,7 +2,10 @@ import ProductModel from "../models/ProductModel.js";
 import { isAdmin } from "./authController.js";
 
 export async function createProduct(req, res) {
-  console.log(req.body);
+  
+    console.log("========== REQUEST BODY ==========");
+    console.log(req.body);
+    console.log("Image received:", req.body.image);
 
   if (!isAdmin(req)) {
     res.status(403).json({ message: "Access denied. Admins only" });
