@@ -35,6 +35,14 @@ app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/reviews", reviewRoutes);
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
+});
+
+server.on("listening", () => {
+  console.log("✅ Express is listening");
+});
+
+server.on("error", (err) => {
+  console.error("❌ Listen error:", err);
 });

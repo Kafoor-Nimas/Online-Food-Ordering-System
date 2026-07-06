@@ -191,7 +191,7 @@ export default function ViewOrderInfoModel({ order }) {
                                                 <div className="flex items-center gap-3">
 
                                                     <img
-                                                        src={item.image}
+                                                        src={item.images}
                                                         alt={item.name}
                                                         className="w-12 h-12 rounded-lg object-cover border border-app-border"
                                                     />

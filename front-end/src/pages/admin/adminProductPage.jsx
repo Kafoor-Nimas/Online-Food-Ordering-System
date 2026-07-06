@@ -5,6 +5,8 @@ import axios from "axios";
 import { CiEdit } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
 import DeleteModel from "../../components/deleteModel";
+import getFormattedPrice from "../../../utils/price-format";
+
 
 export default function AdminProductPage() {
   const [products, setProducts] = useState([]);
@@ -196,6 +198,10 @@ export default function AdminProductPage() {
                 {/* Table Body */}
                 <tbody className="text-app-text divide-y divide-app-border">
                   {products.map((item, index) => {
+
+                    console.log("Product:", item);
+                    console.log("Image URL:", item.image);
+                    
                     return (
                       <tr
                         key={index}
@@ -211,7 +217,7 @@ export default function AdminProductPage() {
                           {item.description}
                         </td>
                         <td className="px-5 py-4 font-semibold text-app-green whitespace-nowrap">
-                          ${item.price}
+                          {getFormattedPrice(item.price)}
                         </td>
                         <td className="px-5 py-4 whitespace-nowrap">
                           <span className="inline-block px-2.5 py-1 text-xs font-medium rounded-full bg-app-green-lighter/10 text-app-green-light">
@@ -229,9 +235,9 @@ export default function AdminProductPage() {
 
                         {/* Image */}
                         <td className="px-5 py-4">
-                          {item.images && item.images[0] ? (
+                          {item.image ? (
                             <img
-                              src={item.images[0]}
+                              src={item.image}
                               alt={item.name}
                               className="w-12 h-12 object-cover rounded-xl border border-app-border shadow-sm"
                             />

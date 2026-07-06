@@ -51,7 +51,7 @@ const Cart = () => {
                 className="bg-white rounded-3xl border border-app-border p-5 shadow-sm flex flex-col md:flex-row gap-4 items-start"
               >
                 <img
-                  src={item.image}
+                  src={item.images}
                   alt={item.name}
                   className="h-32 w-full md:w-32 rounded-3xl object-cover"
                 />
