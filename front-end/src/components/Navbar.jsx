@@ -60,7 +60,10 @@ const Navbar = () => {
         </div>
 
         <div
-          onClick={() => navigate("/cart")}
+          onClick={() => {
+            navigate("/cart");
+            window.scrollTo(0, 0);
+          }}
           className="relative cursor-pointer"
         >
           <img

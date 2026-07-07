@@ -218,6 +218,7 @@ const Checkout = () => {
                 type="submit"
                 disabled={submitting}
                 className="w-full rounded-full bg-app-orange px-6 py-3 text-white text-sm font-semibold hover:bg-app-orange-dark transition disabled:cursor-not-allowed disabled:opacity-60"
+                onClick={() => window.scrollTo(0, 0)}
               >
                 {submitting ? "Placing order..." : "Place order"}
               </button>

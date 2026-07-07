@@ -1,40 +1,45 @@
 import { useParams } from "react-router-dom";
 import ReviewSection from "../components/ReviewSection";
-import { food_list } from "../assets/assets"; 
+import { food_list } from "../assets/assets";
+import { useEffect } from "react";
 
 const ProductDetails = () => {
   const { id } = useParams();
 
 
-  const product = food_list.find((item) => String(item._id || item.id) === String(id));
+  const product = food_list.find(
+    (item) => String(item._id || item.id) === String(id),
+  );
 
   return (
     <div className="min-h-screen bg-app-cream pt-28 pb-12">
       <div className="max-w-4xl mx-auto px-4">
-        
         {/* product details */}
         {product ? (
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8 flex flex-col md:flex-row gap-8 items-center">
             {/* Image */}
             <div className="w-full md:w-1/2">
-                <img 
-                    src={product.image} 
-                    alt={product.name} 
-                    className="w-full h-[300px] object-cover rounded-lg shadow-sm"
-                />
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full h-[300px] object-cover rounded-lg shadow-sm"
+              />
             </div>
             {/* Name and Price */}
             <div className="w-full md:w-1/2">
-              <h1 className="text-3xl font-bold text-app-green mb-3">{product.name}</h1>
+              <h1 className="text-3xl font-bold text-app-green mb-3">
+                {product.name}
+              </h1>
               <p className="text-2xl text-app-orange font-semibold mb-4">
                 Rs. {product.price.toFixed(2)}
               </p>
               <p className="text-gray-600 mb-6 leading-relaxed">
-                {product.description || "Experience the best taste with our premium ingredients and authentic recipes made just for you."}
+                {product.description ||
+                  "Experience the best taste with our premium ingredients and authentic recipes made just for you."}
               </p>
-              
+
               <div className="inline-block bg-app-cream-dark px-4 py-2 rounded-lg text-sm text-app-text font-medium">
-                  Category: {product.category}
+                Category: {product.category}
               </div>
             </div>
           </div>
@@ -46,7 +51,6 @@ const ProductDetails = () => {
 
         {/* Review Section */}
         <ReviewSection productId={id} />
-        
       </div>
     </div>
   );
