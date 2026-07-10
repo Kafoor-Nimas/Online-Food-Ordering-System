@@ -21,6 +21,6 @@ productRouter.delete("/:productId", auth, deleteProduct);
 // productRouter.put("/:productId", auth, updateProduct);
 productRouter.put("/:productId", auth, updateProduct);
 
-productRouter.get("/:productId", getProductById); // ← keep last
+productRouter.get("/:productId", getProductById); 
 
 export default productRouter;

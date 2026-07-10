@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Home from "./pages/Home";
-import Menu from "./pages/Menu";
 import Register from "./pages/Register";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -28,7 +27,7 @@ function AppContent() {
       {showUserLogin && <Login />}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/admin/*" element={<AdminPage/>}/>
+        <Route path="/admin/*" element={<AdminPage />} />
         <Route path="/menu" element={<AllProducts />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
@@ -36,7 +35,6 @@ function AppContent() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/products/:id" element={<ProductDetails />} />
-        
       </Routes>
       {!isAdminPage && <Footer />}
     </>

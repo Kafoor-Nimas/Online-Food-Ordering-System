@@ -23,7 +23,7 @@ const FilterPanel = ({
             <button
               key={cat.slug}
               onClick={() => updateFilter("category", cat.slug)}
-              className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-all ${category === cat.slug ? "bg-app-green text-white" : "text-app-text-light hover:bg-app-cream"}`}
+              className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-all ${category === cat.slug ? "bg-primary-dull text-white" : "text-app-text-light hover:bg-app-cream"}`}
             >
               {cat.name}
             </button>

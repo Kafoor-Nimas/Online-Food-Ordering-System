@@ -3,13 +3,20 @@ import { Link, useSearchParams } from "react-router-dom";
 import { ChevronDown, Home, SlidersHorizontal, XIcon } from "lucide-react";
 import FilterPanel from "../components/FilterPanel";
 import ProductCard from "../components/ProductCard";
-import { categories_Data, food_list } from "../assets/assets";
+// import { categories_Data, food_list } from "../assets/assets";
+import { categories_Data } from "../assets/assets";
 import { useAuth } from "../context/AuthContext";
+import api from "../config/api";
 
 const Products = () => {
   const { searchQuery } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
+
+  // REPLACE WITH:
   const [products, setProducts] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   const category = searchParams.get("category") || "";
@@ -17,34 +24,73 @@ const Products = () => {
   const minPrice = searchParams.get("minPrice") || "";
   const maxPrice = searchParams.get("maxPrice") || "";
   const organic = searchParams.get("organic") || "";
-
-  const totalPages = 1;
-  const page = 1;
+  const page = Number(searchParams.get("page")) || 1;
 
   useEffect(() => {
-    let filtered = [...food_list];
+    const fetchProducts = async () => {
+      setLoading(true);
+      try {
+        const { data } = await api.get("/products", {
+          params: {
+            category: category || undefined,
+            search: searchQuery || undefined,
+            sort: sort || undefined,
+            minPrice: minPrice || undefined,
+            maxPrice: maxPrice || undefined,
+            organic: organic || undefined,
+            page,
+            limit: 12,
+          },
+        });
+        setProducts(data.products);
+        setTotalPages(data.pages);
+        setTotal(data.total);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setProducts([]);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    // search filter
-    if (searchQuery) {
-      filtered = filtered.filter((p) =>
-        p.name.toLowerCase().includes(String(searchQuery).toLowerCase()),
-      );
-    }
-    if (category)
-      filtered = filtered.filter(
-        (p) => p.category.toLowerCase() === category.toLowerCase(),
-      );
-    if (minPrice)
-      filtered = filtered.filter((p) => p.price >= Number(minPrice));
-    if (maxPrice)
-      filtered = filtered.filter((p) => p.price <= Number(maxPrice));
-    if (sort === "price_asc") filtered.sort((a, b) => a.price - b.price);
-    if (sort === "price_desc") filtered.sort((a, b) => b.price - a.price);
-    if (sort === "rating") filtered.sort((a, b) => b.rating - a.rating);
-    if (sort === "name") filtered.sort((a, b) => a.name.localeCompare(b.name));
+    fetchProducts();
+  }, [category, sort, minPrice, maxPrice, organic, searchQuery, page]);
+  // const [products, setProducts] = useState([]);
+  // const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
-    setProducts(filtered);
-  }, [category, sort, minPrice, maxPrice, searchQuery]);
+  // const category = searchParams.get("category") || "";
+  // const sort = searchParams.get("sort") || "";
+  // const minPrice = searchParams.get("minPrice") || "";
+  // const maxPrice = searchParams.get("maxPrice") || "";
+  // const organic = searchParams.get("organic") || "";
+
+  // const totalPages = 1;
+  // const page = 1;
+
+  // useEffect(() => {
+  //   let filtered = [...food_list];
+
+  //   // search filter
+  //   if (searchQuery) {
+  //     filtered = filtered.filter((p) =>
+  //       p.name.toLowerCase().includes(String(searchQuery).toLowerCase()),
+  //     );
+  //   }
+  //   if (category)
+  //     filtered = filtered.filter(
+  //       (p) => p.category.toLowerCase() === category.toLowerCase(),
+  //     );
+  //   if (minPrice)
+  //     filtered = filtered.filter((p) => p.price >= Number(minPrice));
+  //   if (maxPrice)
+  //     filtered = filtered.filter((p) => p.price <= Number(maxPrice));
+  //   if (sort === "price_asc") filtered.sort((a, b) => a.price - b.price);
+  //   if (sort === "price_desc") filtered.sort((a, b) => b.price - a.price);
+  //   if (sort === "rating") filtered.sort((a, b) => b.rating - a.rating);
+  //   if (sort === "name") filtered.sort((a, b) => a.name.localeCompare(b.name));
+
+  //   setProducts(filtered);
+  // }, [category, sort, minPrice, maxPrice, searchQuery]);
 
   const updateFilter = (key, value) => {
     const newParams = new URLSearchParams(searchParams);
@@ -100,7 +146,8 @@ const Products = () => {
                   {activeCategory ? activeCategory.name : "All Products"}
                 </h1>
                 <p className="text-sm text-app-text-light mt-0.5">
-                  {products.length} products found
+                  {/* {products.length} products found */}
+                  {total} products found
                 </p>
               </div>
 
@@ -135,7 +182,11 @@ const Products = () => {
               <Loading />
             ) :  */}
             {/* Product Grid */}
-            {products.length === 0 ? (
+            {loading ? (
+              <div className="text-center py-16 text-app-text-light">
+                Loading products...
+              </div>
+            ) : products.length === 0 ? (
               <div className="text-center py-16">
                 <p className="text-lg font-semibold text-app-green mb-2">
                   No products found
