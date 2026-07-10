@@ -2,18 +2,29 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRightIcon } from "lucide-react";
 import ProductCard from "./ProductCard";
-import { food_list_home } from "../assets/assets";
+import api from "../config/api";
 
 const PopularProducts = () => {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const formatted = food_list_home.slice(0, 10).map((p) => ({
-      ...p,
-      rating: 4.5,
-    }));
-    setProducts(formatted);
+    const fetchPopular = async () => {
+      try {
+        const { data } = await api.get("/products", {
+          params: { sort: "rating", limit: 10 },
+        });
+        setProducts(data.products);
+      } catch (error) {
+        console.error("Error fetching popular products:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPopular();
   }, []);
+
+  if (loading || products.length === 0) return null; // or a skeleton
 
   return (
     <section className="pb-8 sm:pb-12 md:pb-16">
