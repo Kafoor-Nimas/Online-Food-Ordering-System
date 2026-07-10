@@ -1282,12 +1282,12 @@ export const footerLinks = [
 export const categories_Data = [
   { slug: "salad", name: "Salad" },
   { slug: "rolls", name: "Rolls" },
-  { slug: "deserts", name: "Deserts" },
-  { slug: "sandwich", name: "Sandwich" },
+  { slug: "Desserts", name: "Deserts" },
+  { slug: "Sandwiche", name: "Sandwich" },
   { slug: "cake", name: "Cake" },
   { slug: "Pure Veg", name: "Pure Veg" },
   { slug: "pasta", name: "Pasta" },
   { slug: "noodles", name: "Noodles" },
-  { slug: "biryani", name: "Biryani" },
+  { slug: "Biriyani", name: "Biryani" },
   { slug: "beverages", name: "Beverages" },
 ];

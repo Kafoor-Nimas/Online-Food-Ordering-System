@@ -63,7 +63,8 @@ export const getProductsForMenu = async (req, res) => {
       req.query;
     const filter = { isAvailable: true };
 
-    if (category && category !== "all") filter.category = category;
+    if (category && category !== "all")
+      filter.category = { $regex: `^${category}$`, $options: "i" };
     if (search) filter.name = { $regex: search, $options: "i" };
     if (organic === "true") filter.organic = true;
     if (minPrice || maxPrice) {
