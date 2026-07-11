@@ -16,10 +16,12 @@ import AdminOrdersPage from "./admin/adminOrdersPage";
 import AdminUsersPage from "./admin/adminUsersPage";
 import AdminAddProductPage from "./admin/adminAddProductPage";
 import AdminUpdateProductPage from "./admin/adminUpdateProductPage";
+import { useAuth } from "../context/AuthContext";
 
 export default function AdminPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [stats, setStats] = useState({ products: 0, orders: 0, users: 0 });
+  const { logout } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -62,10 +64,10 @@ export default function AdminPage() {
     },
   ];
 
-  function logout() {
-    localStorage.removeItem("auth_token");
-    navigate("/", { replace: true });
-  }
+  // function logout() {
+  //   localStorage.removeItem("auth_token");
+  //   navigate("/", { replace: true });
+  // }
 
   return (
     <div className="min-h-screen bg-gray-50">

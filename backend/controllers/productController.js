@@ -123,20 +123,28 @@ export async function updateProduct(req, res) {
     if (!req.body.name)
       return res.status(400).json({ message: "Product name is required" });
     data.name = req.body.name;
-    data.description = req.body.description || "";
+    if (req.body.description !== undefined)
+      data.description = req.body.description;
     if (!req.body.price)
       return res.status(400).json({ message: "Product price is required" });
     data.price = req.body.price;
-    data.originalPrice = req.body.originalPrice || req.body.price;
-    data.category = req.body.category || "Others";
-    data.image = req.body.image || "/images/default-product.png";
-    data.unit = req.body.unit || "piece";
+    if (req.body.originalPrice !== undefined)
+      data.originalPrice = req.body.originalPrice;
+    if (req.body.category !== undefined) data.category = req.body.category;
+    if (req.body.image !== undefined) data.image = req.body.image;
+    if (req.body.unit !== undefined) data.unit = req.body.unit;
+    if (req.body.rating !== undefined) data.rating = Number(req.body.rating);
+    if (req.body.reviewCount !== undefined)
+      data.reviewCount = Number(req.body.reviewCount);
+    if (req.body.isAvailable !== undefined)
+      data.isAvailable = req.body.isAvailable;
 
-    data.rating = Number(req.body.rating) || 0;
-    data.reviewCount = Number(req.body.reviewCount) || 0;
-
-    data.isAvailable = req.body.isAvailable === false ? false : true;
-    await ProductModel.updateOne({ productId: req.params.productId }, data);
+    const result = await ProductModel.updateOne(
+      { productId: req.params.productId },
+      data,
+    );
+    if (result.matchedCount === 0)
+      return res.status(404).json({ message: "Product not found" });
     res.status(200).json({ message: "Product updated successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error updating product", error });
