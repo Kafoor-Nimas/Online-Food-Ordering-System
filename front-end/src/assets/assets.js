@@ -118,13 +118,13 @@ export const categoriesData = [
     image: menu_1,
   },
   { slug: "rolls", name: "Rolls", image: menu_2 },
-  { slug: "deserts", name: "Deserts", image: menu_3 },
-  { slug: "sandwich", name: "Sandwich", image: menu_4 },
+  { slug: "desserts", name: "Deserts", image: menu_3 },
+  { slug: "sandwiche", name: "Sandwich", image: menu_4 },
   { slug: "cake", name: "Cake", image: menu_5 },
   { slug: "Pure Veg", name: "Pure Veg", image: menu_6 },
   { slug: "pasta", name: "Pasta", image: menu_7 },
   { slug: "noodles", name: "Noodles", image: menu_8 },
-  { slug: "biryani", name: "Biryani", image: menu_9 },
+  { slug: "biriyani", name: "Biryani", image: menu_9 },
   { slug: "beverages", name: "Beverages", image: menu_10 },
 ];
 

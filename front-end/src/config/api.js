@@ -4,8 +4,6 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL || "http://localhost:5000/api",
 });
 
-
-
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("auth_token");
   if (token && token !== "null" && token !== "undefined") {

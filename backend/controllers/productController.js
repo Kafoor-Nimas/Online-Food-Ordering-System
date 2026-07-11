@@ -145,9 +145,7 @@ export async function updateProduct(req, res) {
 
 export async function getProductById(req, res) {
   try {
-    const product = await ProductModel.findOne({
-      productId: req.params.productId,
-    });
+    const product = await ProductModel.findById(req.params.productId);
     if (!product) return res.status(404).json({ message: "Product not found" });
     if (!product.isAvailable && !isAdmin(req))
       return res.status(404).json({ message: "Product not found" });

@@ -1,15 +1,33 @@
 import { useParams } from "react-router-dom";
 import ReviewSection from "../components/ReviewSection";
-import { food_list } from "../assets/assets";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import api from "../config/api";
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
 
-  const product = food_list.find(
-    (item) => String(item._id || item.id) === String(id),
-  );
+    const fetchProduct = async () => {
+      setLoading(true);
+      setError(false);
+      try {
+        const res = await api.get(`/products/${id}`);
+        setProduct(res.data);
+      } catch (err) {
+        console.error("Error fetching product:", err);
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
 
   return (
     <div className="min-h-screen bg-app-cream pt-28 pb-12">
