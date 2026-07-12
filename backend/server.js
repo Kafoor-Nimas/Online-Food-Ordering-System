@@ -15,7 +15,14 @@ const app = express();
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin || origin.startsWith("http://localhost")) {
+      const allowedOrigins = [
+        "https://online-food-ordering-system-nine.vercel.app", // ← our frontend
+      ];
+      if (
+        !origin ||
+        origin.startsWith("http://localhost") ||
+        allowedOrigins.includes(origin)
+      ) {
         return callback(null, true);
       }
       callback(new Error("Not allowed by CORS"));
