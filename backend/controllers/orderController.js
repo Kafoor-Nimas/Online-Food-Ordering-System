@@ -116,13 +116,13 @@ import { isAdmin } from "./authController.js";
 // }
 
 export async function createOrder(req, res) {
-  if (!req.user) {
+ 
+  try {
+    if (!req.body.shippingAddress) if (!req.user) {
     return res
       .status(401)
       .json({ message: "Unauthorized. Please log in to place an order." });
   }
-  try {
-    if (!req.body.shippingAddress)
       return res.status(400).json({ message: "Shipping address is required" });
     if (!req.body.phone)
       return res.status(400).json({ message: "Phone number is required" });

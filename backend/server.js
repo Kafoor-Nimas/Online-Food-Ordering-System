@@ -16,7 +16,7 @@ app.use(
   cors({
     origin: function (origin, callback) {
       const allowedOrigins = [
-        "https://online-food-ordering-system-nine.vercel.app", // ← our frontend
+        "https://online-food-ordering-wheat-mu.vercel.app", // ← our frontend
       ];
       if (
         !origin ||
