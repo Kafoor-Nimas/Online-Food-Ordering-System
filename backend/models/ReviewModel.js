@@ -1,16 +1,18 @@
 import mongoose from "mongoose";
+import Review from "../models/ReviewModel.js";
+import "../models/userModel.js"; 
 
 const reviewSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "user",
       required: true,
     },
     product: {
       // type: mongoose.Schema.Types.ObjectId,
       type: String, // ← change from ObjectId to String
-      ref: "Product",
+      ref: "product",
       required: true,
     },
     rating: {
