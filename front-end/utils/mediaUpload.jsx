@@ -36,39 +36,61 @@
 
 // }
 
-import { createClient } from "@supabase/supabase-js";
+// -------------------------------------
+// import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = "https://mnsvyinphhzxswkxrmma.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1uc3Z5aW5waGh6eHN3a3hybW1hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxMjUwNTMsImV4cCI6MjA5ODcwMTA1M30.b4jVmgHD4is2zHu85iSuX8o-rSQHTKgmfwSyRQvcj4U";
+// const supabaseUrl = "https://mnsvyinphhzxswkxrmma.supabase.co";
+// const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1uc3Z5aW5waGh6eHN3a3hybW1hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxMjUwNTMsImV4cCI6MjA5ODcwMTA1M30.b4jVmgHD4is2zHu85iSuX8o-rSQHTKgmfwSyRQvcj4U";
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+// const supabase = createClient(supabaseUrl, supabaseKey);
+
+// export default async function uploadFile(file) {
+
+//     if (!file) {
+//         throw new Error("No file selected");
+//     }
+
+//     const timestamp = Date.now();
+//     const fileName = `${timestamp}-${file.name}`;
+
+//     const { data, error } = await supabase.storage
+//         .from("images")
+//         .upload(fileName, file, {
+//             cacheControl: "3600",
+//             upsert: false,
+//         });
+
+//     if (error) {
+//     console.log("Supabase upload error:");
+//     console.log(error);
+//     alert(JSON.stringify(error));
+//     throw error;
+// }
+
+//     const { data: publicUrlData } = supabase.storage
+//         .from("images")
+//         .getPublicUrl(fileName);
+
+//     return publicUrlData.publicUrl;
+// }
 
 export default async function uploadFile(file) {
+  if (!file) {
+    throw new Error("No file selected");
+  }
 
-    if (!file) {
-        throw new Error("No file selected");
-    }
+  const formData = new FormData();
+  formData.append("image", file);
 
-    const timestamp = Date.now();
-    const fileName = `${timestamp}-${file.name}`;
+  const response = await fetch("https://YOUR_BACKEND_URL/api/upload", {
+    method: "POST",
+    body: formData,
+  });
 
-    const { data, error } = await supabase.storage
-        .from("images")
-        .upload(fileName, file, {
-            cacheControl: "3600",
-            upsert: false,
-        });
+  if (!response.ok) {
+    throw new Error("Failed to upload file");
+  }
 
-    if (error) {
-    console.log("Supabase upload error:");
-    console.log(error);
-    alert(JSON.stringify(error));
-    throw error;
-}
-
-    const { data: publicUrlData } = supabase.storage
-        .from("images")
-        .getPublicUrl(fileName);
-
-    return publicUrlData.publicUrl;
+  const data = await response.json();
+  return data.url; 
 }

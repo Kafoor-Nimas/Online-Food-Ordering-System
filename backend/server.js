@@ -7,6 +7,8 @@ import productRoutes from "./routes/productRoutes.js";
 import userRouter from "./router/userRouter.js";
 import orderRouter from "./routes/orderRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
+import uploadRoute from "./routes/upload.js";
+
 
 dotenv.config();
 connectDB();
@@ -41,6 +43,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api", uploadRoute);
 
 const server = app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
